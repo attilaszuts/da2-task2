@@ -106,9 +106,6 @@ cpuCores <- function(x) {
   return(outlist)
 }
 
-# clean directory
-rm(temp, raw1, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores)
-
 # add new columns with cleaned cpu data
 laptop <- laptop %>% 
   add_column(cpu_manufac = cpuMan(laptop)) # extract manufacturer
@@ -118,9 +115,13 @@ laptop <- laptop %>%
              cpu_freq = cpuFreq(laptop), # extract cpu clock frequency
              cpu_cores = cpuCores(laptop) # extract cpu cores
              ) %>% 
+  mutate(cpu_freq = as.numeric(gsub("ghz", "", cpu_freq, ignore.case = T))) %>% 
   select(-c(lencpu, cpu_cores, cpu)) %>% 
   mutate(memory = tolower(trimws(memory)), 
          ssd = ifelse(grepl("ssd|flash|hybrid", memory), T, F),
          hdd = ifelse(grepl("hdd|hybrid", memory), T, F))
+
+# clean directory
+rm(temp, raw1, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores)
 ```
 
