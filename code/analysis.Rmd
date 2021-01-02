@@ -1,0 +1,8 @@
+---
+title: "Laptop Pricing"
+author: "Attila Szuts"
+date: "02/01/2021"
+output: html_document
+---
+
+
