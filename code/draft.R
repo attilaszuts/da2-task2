@@ -235,3 +235,26 @@ gpuMan <- function(x) {
   return(outlist)
 }
 gpuMan(laptop)
+
+
+# product names -----------------------------------------------------------
+
+# which products are the most popoular
+temptab <- table(laptop$product)
+
+tlist <- c()
+tnames <- c()
+for (i in 1:length(temptab)) {
+  if (temptab[i][[1]] > 10) {
+    tlist <- c(tlist, temptab[i][[1]])
+    tnames <- c(tnames, names(temptab[i]))
+  }
+}
+
+tdf <- data.frame(name = tnames, count = tlist)
+
+laptop %>% 
+  group_by(product) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  ggplot(aes(count)) + geom_histogram()
