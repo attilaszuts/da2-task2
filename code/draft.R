@@ -169,8 +169,58 @@ rm(list = c("temp1", "temp2", "temp3", "tcpu"))
 # memory ------------------------------------------------------------------
 
 # number of different memory -> needs cleaning
-laptop %>% group_by(memory) %>% summarise(count = n()) %>%  arrange(desc(count))
+laptop %>% group_by(memory) %>% summarise(count = n()) %>%  arrange(desc(count)) %>% view()
 
+unique(laptop %>% filter(ssd == F, hdd == T) %>% select(memory)) %>% view() # hdd
+unique(laptop %>% filter(ssd == T, hdd == F) %>% select(memory)) %>% view() # ssd
+unique(laptop %>% filter(ssd == T, hdd == T) %>% select(memory)) %>% view() # both
+
+
+memory <- function(x) {
+  outlist <- list()
+  ssd <- c()
+  hdd <- c()
+  for (e in 1:length(x$memory)) {
+    if (x$ssd[e] == T & x$hdd[e] == F) {
+      ssd <- c(ssd, str_extract(x$memory[e], "[:digit:]+tb|[:digit:]+gb")[[1]])
+      hdd <- c(hdd, 0)
+    } else if (x$ssd[e] == F & x$hdd[e] == T) {
+      hdd <- c(hdd, str_extract(x$memory[e], "[:digit:]+tb|[:digit:]+gb|1\\.0tb")[[1]])
+      ssd <- c(ssd, 0)
+    } else {
+      tryCatch(
+        expr = {
+          if (grepl("hybrid", x$memory[e])) {
+            hdd <- c(hdd, str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[1]])
+            ssd <- c(ssd, 0)
+          } else {
+            ssd <- c(ssd, str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[1]])
+            hdd <- c(hdd, str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[2]])
+          }},
+        error = function(er) {
+          message("there was an error")
+          print(laptop$memory[e])
+          if (x$ssd[e] == T & x$hdd[e] == F) {
+            print("ssd")
+          } else if (x$ssd[e] == F & x$hdd[e] == T) {
+            print("hdd")
+          } else {
+            print(paste(str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[1]], str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[2]]))
+          }
+          }
+        )
+    }
+  }
+  outlist <- list(ssd = ssd, hdd = hdd)
+  return(outlist)
+}
+
+laptop %>% 
+  add_column(ssd_size = memory(laptop)["ssd"][[1]], hdd_size = memory(laptop)["hdd"][[1]]) %>% 
+  # filter(grepl("tb", ssd_size)) %>% select(ssd_size) %>% unique()
+  mutate(hdd_size = ifelse(grepl("tb", hdd_size), as.numeric(gsub("tb", "", hdd_size))*1000, as.numeric(gsub("gb", "", hdd_size))),
+         ssd_size = ifelse(grepl("gb", ssd_size), as.numeric(gsub("gb", "", ssd_size)), as.numeric(gsub("tb", "", ssd_size))*1000)) %>% select(ssd_size) %>% unique()
+  
 # gpu --------------------------------------------------------------------
 
 # number of different gpu -> needs cleaning
