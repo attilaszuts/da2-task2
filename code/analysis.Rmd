@@ -3,6 +3,19 @@ title: "Laptop Pricing"
 author: "Attila Szuts"
 date: "02/01/2021"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
+
+```{r}
+rm(list = ls())
+library(tidyverse); library(janitor)
+laptops <- "data/raw/laptop-price/"
+laptop <- read_csv(paste0(laptops, "laptop_price.csv"))
+```
+
+```{r}
+
+```
 
