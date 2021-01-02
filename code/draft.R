@@ -224,5 +224,14 @@ laptop %>%
 # gpu --------------------------------------------------------------------
 
 # number of different gpu -> needs cleaning
-laptop %>% group_by(gpu) %>% summarise(count = n()) %>%  arrange(desc(count))
+laptop %>% group_by(gpu) %>% summarise(count = n()) %>%  arrange(desc(gpu)) %>% mutate(lengpu = sapply(strsplit(gpu, split = " "), length)) %>% arrange(lengpu, gpu, count) %>% filter(count > 20) %>%  view()
 
+
+gpuMan <- function(x) {
+  outlist <- c()
+  for (e in 1:length(x$gpu)) {
+    outlist <- c(outlist, strsplit(x$gpu[e], split = " ")[[1]][[1]])
+  }
+  return(outlist)
+}
+gpuMan(laptop)
