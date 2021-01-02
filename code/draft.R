@@ -76,20 +76,9 @@ laptop %>% summarise(screen_small = sum(screen_small), screen_mid = sum(screen_m
 # number of different sceens 
 view(laptop %>% group_by(screen_resolution) %>% summarise(count = n()) %>%  arrange(desc(count)))
 
-# number of different cpus -> needs cleaning
-laptop %>% group_by(cpu) %>% summarise(count = n()) %>%  arrange(desc(count))
-
 # number of different ram
 laptop %>% group_by(ram) %>% summarise(count = n()) %>%  arrange(desc(ram))
 
-# number of different memory -> needs cleaning
-laptop %>% group_by(memory) %>% summarise(count = n()) %>%  arrange(desc(count))
-
-# number of different gpu -> needs cleaning
-laptop %>% group_by(gpu) %>% summarise(count = n()) %>%  arrange(desc(count))
-
-# number of different op_sys
-laptop %>% group_by(op_sys) %>% summarise(count = n()) %>%  arrange(desc(count))
 
 # weight
 laptop %>% 
@@ -111,10 +100,20 @@ view(temp %>% filter(touchscreen != T))
 view(temp)
 rm(temp)
 
-grepl("Touchscreen", laptop$screen_resolution)
+
+# cpu ---------------------------------------------------------------------
+
+# number of different cpus -> needs cleaning
+laptop %>% group_by(cpu) %>% summarise(count = n()) %>%  arrange(desc(count))
 
 
-view(laptop %>% select(screen_resolution) %>% filter(grepl("[:digit:]", laptop$screen_resolution) == T))
+# memory ------------------------------------------------------------------
 
-pattern = "([:digit:]{3,4}x[:digit:]{3,4})"
-str_extract_all(laptop$screen_resolution, pattern, simplify = T)
+# number of different memory -> needs cleaning
+laptop %>% group_by(memory) %>% summarise(count = n()) %>%  arrange(desc(count))
+
+# gpu --------------------------------------------------------------------
+
+# number of different gpu -> needs cleaning
+laptop %>% group_by(gpu) %>% summarise(count = n()) %>%  arrange(desc(count))
+
