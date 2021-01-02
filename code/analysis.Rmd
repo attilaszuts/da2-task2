@@ -160,12 +160,14 @@ laptop <- laptop %>%
   # clean memory
   mutate(memory = tolower(trimws(memory)), 
          ssd = ifelse(grepl("ssd|flash|hybrid", memory), T, F), # create ssd dummy
-         hdd = ifelse(grepl("hdd|hybrid", memory), T, F)) %>%   # create hdd dummy
+         hdd = ifelse(grepl("hdd|hybrid", memory), T, F)) # create hdd dummy
+
+laptop <- laptop %>% 
   add_column(ssd_size = memory(laptop)["ssd"][[1]], hdd_size = memory(laptop)["hdd"][[1]]) %>%  # add column for ssd and hdd size
   mutate(hdd_size = ifelse(grepl("tb", hdd_size), as.numeric(gsub("tb", "", hdd_size))*1000, as.numeric(gsub("gb", "", hdd_size))), # transform to GB
          ssd_size = ifelse(grepl("gb", ssd_size), as.numeric(gsub("gb", "", ssd_size)), as.numeric(gsub("tb", "", ssd_size))*1000)) # transform to GB
 
 # clean directory
-rm(temp, raw1, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores)
+rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
 ```
 
