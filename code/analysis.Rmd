@@ -26,6 +26,7 @@ laptop <- raw1 %>%
   mutate(screen_small = ifelse(inches < 15, T, F), 
          screen_mid = ifelse(inches >= 15 & inches < 17, T, F),
          screen_big = ifelse(inches >= 17, T, F)) %>% 
+  # extract resolution
   mutate(touchscreen = ifelse(grepl("Touchscreen", raw1$screen_resolution), T, F), # touchscreen dummy
          ips = ifelse(grepl("IPS", raw1$screen_resolution), T, F), # IPS display dummy
          resolution = str_extract_all(raw1$screen_resolution, pattern, simplify = T)) %>% 
@@ -117,7 +118,9 @@ laptop <- laptop %>%
              cpu_freq = cpuFreq(laptop), # extract cpu clock frequency
              cpu_cores = cpuCores(laptop) # extract cpu cores
              ) %>% 
-  select(-c(lencpu, cpu_cores, cpu))
-  
+  select(-c(lencpu, cpu_cores, cpu)) %>% 
+  mutate(memory = tolower(trimws(memory)), 
+         ssd = ifelse(grepl("ssd|flash|hybrid", memory), T, F),
+         hdd = ifelse(grepl("hdd|hybrid", memory), T, F))
 ```
 
