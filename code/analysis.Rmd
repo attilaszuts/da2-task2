@@ -105,6 +105,46 @@ cpuCores <- function(x) {
   }
   return(outlist)
 }
+# create function that extracts storage size and type
+memory <- function(x) {
+  outlist <- list()
+  ssd <- c()
+  hdd <- c()
+  for (e in 1:length(x$memory)) {
+    if (x$ssd[e] == T & x$hdd[e] == F) {
+      ssd <- c(ssd, str_extract(x$memory[e], "[:digit:]+tb|[:digit:]+gb")[[1]])
+      hdd <- c(hdd, 0)
+    } else if (x$ssd[e] == F & x$hdd[e] == T) {
+      hdd <- c(hdd, str_extract(x$memory[e], "[:digit:]+tb|[:digit:]+gb|1\\.0tb")[[1]])
+      ssd <- c(ssd, 0)
+    } else {
+      tryCatch(
+        expr = {
+          if (grepl("hybrid", x$memory[e])) {
+            hdd <- c(hdd, str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[1]])
+            ssd <- c(ssd, 0)
+          } else {
+            ssd <- c(ssd, str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[1]])
+            hdd <- c(hdd, str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[2]])
+          }},
+        error = function(er) {
+          message("there was an error")
+          print(laptop$memory[e])
+          if (x$ssd[e] == T & x$hdd[e] == F) {
+            print("ssd")
+          } else if (x$ssd[e] == F & x$hdd[e] == T) {
+            print("hdd")
+          } else {
+            print(paste(str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[1]], str_extract_all(x$memory[e], "[:digit:]+gb|[:digit:]+\\.*[:digit:]*tb")[[1]][[2]]))
+          }
+          }
+        )
+    }
+  }
+  outlist <- list(ssd = ssd, hdd = hdd)
+  return(outlist)
+}
+
 
 # add new columns with cleaned cpu data
 laptop <- laptop %>% 
@@ -117,9 +157,13 @@ laptop <- laptop %>%
              ) %>% 
   mutate(cpu_freq = as.numeric(gsub("ghz", "", cpu_freq, ignore.case = T))) %>% 
   select(-c(lencpu, cpu_cores, cpu)) %>% 
+  # clean memory
   mutate(memory = tolower(trimws(memory)), 
-         ssd = ifelse(grepl("ssd|flash|hybrid", memory), T, F),
-         hdd = ifelse(grepl("hdd|hybrid", memory), T, F))
+         ssd = ifelse(grepl("ssd|flash|hybrid", memory), T, F), # create ssd dummy
+         hdd = ifelse(grepl("hdd|hybrid", memory), T, F)) %>%   # create hdd dummy
+  add_column(ssd_size = memory(laptop)["ssd"][[1]], hdd_size = memory(laptop)["hdd"][[1]]) %>%  # add column for ssd and hdd size
+  mutate(hdd_size = ifelse(grepl("tb", hdd_size), as.numeric(gsub("tb", "", hdd_size))*1000, as.numeric(gsub("gb", "", hdd_size))), # transform to GB
+         ssd_size = ifelse(grepl("gb", ssd_size), as.numeric(gsub("gb", "", ssd_size)), as.numeric(gsub("tb", "", ssd_size))*1000)) # transform to GB
 
 # clean directory
 rm(temp, raw1, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores)
