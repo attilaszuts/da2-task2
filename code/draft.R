@@ -265,3 +265,20 @@ laptop %>%
   summarise(count = n()) %>% 
   arrange(desc(count)) %>% 
   ggplot(aes(count)) + geom_histogram()
+
+
+# descriptives ------------------------------------------------------------
+
+summary(laptop$weight)
+summary(laptop$price_euros)
+ggplot(aes(price_euros), data = laptop) + geom_histogram(bins = 50)
+ggplot(aes(weight), data = laptop) + geom_histogram(bins = 30)
+
+laptop %>% 
+  arrange(desc(price_euros)) + 
+  top_n(price_euros, n = 50)
+
+
+reg1 <- lm(price_euros ~ weight, laptop)
+summary(reg1)
+
