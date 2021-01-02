@@ -12,10 +12,24 @@ editor_options:
 rm(list = ls())
 library(tidyverse); library(janitor)
 laptops <- "data/raw/laptop-price/"
-laptop <- read_csv(paste0(laptops, "laptop_price.csv"))
+raw1 <- read_csv(paste0(laptops, "laptop_price.csv"))
 ```
 
 ```{r}
+pattern <- "([:digit:]{3,4}x[:digit:]{3,4})" # pattern to match screen resolutions
+  
+# data cleaning
+laptop <- raw1 %>% 
+  mutate(ram = as.numeric(gsub("GB", "", raw1$ram)), # convert RAM to numeric, in GB
+         weight = as.numeric(gsub("kg", "", raw1$weight))) %>% # convert weight to numeric, in kg
+  # create group dummies for screen size
+  mutate(screen_small = ifelse(inches < 15, T, F), 
+         screen_mid = ifelse(inches >= 15 & inches < 17, T, F),
+         screen_big = ifelse(inches >= 17, T, F)) %>% 
+  mutate(touchscreen = ifelse(grepl("Touchscreen", laptop$screen_resolution), T, F), # touchscreen dummy
+         ips = ifelse(grepl("IPS", laptop$screen_resolution), T, F), # IPS display dummy
+         resolution = str_extract_all(raw1$screen_resolution, pattern, simplify = T)) %>% 
+  select(-screen_resolution)
 
 ```
 
