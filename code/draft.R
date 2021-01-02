@@ -106,6 +106,65 @@ rm(temp)
 # number of different cpus -> needs cleaning
 laptop %>% group_by(cpu) %>% summarise(count = n()) %>%  arrange(desc(count))
 
+temp3 <- laptop %>% 
+  mutate(cpu = tolower(trimws(cpu))) %>% 
+  group_by(cpu) %>% 
+  summarise(count = n())
+
+temp3 <- temp3 %>% 
+  add_column(lencpu = sapply(strsplit(temp3$cpu, " "), length)) %>% 
+  arrange(lencpu, cpu)
+
+
+# number of words in cpu 
+## -> AMD
+sapply(strsplit(temp1$cpu, " "), length)
+## -> Intel
+sapply(strsplit(temp2$cpu, " "), length)
+
+
+# final version will be this
+laptop %>% 
+  mutate(cpu = tolower(trimws(cpu))) %>% # trim whitespace
+  mutate(cpu_manufac = strsplit(x = cpu, split = " ")[[1]][[1]][[1]]) # extract manufacturer
+
+laptop %>% 
+  mutate(cpu = tolower(trimws(cpu))) %>% # trim whitespace
+  mutate(cpu_manufac = cpuMan(laptop)) %>% # extract manufacturer
+  # add_column(lencpu = sapply(strsplit(laptop$cpu, " "), length)) %>% 
+  mutate(cpu_model = cpuModel(laptop)) %>% 
+  # select(-lencpu) %>% 
+  # filter(lencpu == 4, cpu_manufac == "amd") %>% 
+  select(cpu, lencpu, cpu_manufac, cpu_model) %>% 
+  view()
+
+# function that extracts cpu manufacturer
+cpuMan <- function(x) {
+  outlist <- c()
+  for (e in 1:length(x$cpu)) {
+    outlist <- c(outlist, strsplit(x$cpu[e], split = " ")[[1]][[1]])
+  }
+  return(outlist)
+}
+
+x <- laptop
+e <- 1
+# function that extracts cpu model
+cpuModel <- function(x) {
+  outlist <- c()
+  for (e in 1:length(x$cpu)) {
+    if (x$lencpu[e] == 5 & grepl("xeon", x$cpu[e]) != T)  {
+      outlist <- c(outlist, paste(strsplit(x$cpu[e], split = " ")[[1]][[2]], strsplit(x$cpu[e], split = " ")[[1]][[3]]))
+    } else if (x$lencpu[e] == 4 & x$cpu_manufac[e] == "intel") {
+      outlist <- c(outlist, paste(strsplit(x$cpu[e], split = " ")[[1]][[2]], strsplit(x$cpu[e], split = " ")[[1]][[3]]))
+    } else {
+      outlist <- c(outlist, strsplit(x$cpu[e], split = " ")[[1]][[2]])
+    }
+  }
+  return(outlist)
+}
+
+rm(list = c("temp1", "temp2", "temp3", "tcpu"))
 
 # memory ------------------------------------------------------------------
 
