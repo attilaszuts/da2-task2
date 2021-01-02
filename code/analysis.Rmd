@@ -12,7 +12,7 @@ editor_options:
 rm(list = ls())
 library(tidyverse); library(janitor)
 laptops <- "data/raw/laptop-price/"
-raw1 <- read_csv(paste0(laptops, "laptop_price.csv"))
+raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
 
 ```{r}
@@ -26,11 +26,12 @@ laptop <- raw1 %>%
   mutate(screen_small = ifelse(inches < 15, T, F), 
          screen_mid = ifelse(inches >= 15 & inches < 17, T, F),
          screen_big = ifelse(inches >= 17, T, F)) %>% 
-  mutate(touchscreen = ifelse(grepl("Touchscreen", laptop$screen_resolution), T, F), # touchscreen dummy
-         ips = ifelse(grepl("IPS", laptop$screen_resolution), T, F), # IPS display dummy
+  mutate(touchscreen = ifelse(grepl("Touchscreen", raw1$screen_resolution), T, F), # touchscreen dummy
+         ips = ifelse(grepl("IPS", raw1$screen_resolution), T, F), # IPS display dummy
          resolution = str_extract_all(raw1$screen_resolution, pattern, simplify = T)) %>% 
   select(-screen_resolution) %>% 
-  mutate(cpu = tolower(trimws(cpu))) # trim whitespace
+  mutate(cpu = tolower(trimws(cpu))) %>% # trim whitespace
+  add_column(lencpu = sapply(strsplit(raw1$cpu, " "), length))
 
   
 # number of words in cpu column
@@ -41,7 +42,7 @@ temp <- temp %>%
   add_column(lencpu = sapply(strsplit(temp$cpu, " "), length)) %>% 
   arrange(lencpu, cpu)
 
-# function that extracts cpu manufacturer
+# function that extract cpu manufacturer, cpu model, cpu model variant, cpu frequency and number of cores
 cpuMan <- function(x) {
   outlist <- c()
   for (e in 1:length(x$cpu)) {
@@ -49,8 +50,6 @@ cpuMan <- function(x) {
   }
   return(outlist)
 }
-
-# function that extracts cpu model
 cpuModel <- function(x) {
   outlist <- c()
   for (e in 1:length(x$cpu)) {
@@ -64,7 +63,6 @@ cpuModel <- function(x) {
   }
   return(outlist)
 }
-
 cpuVariant <- function(x) {
   outlist <- c()
   for (e  in 1:length(x$cpu)) {
@@ -82,7 +80,6 @@ cpuVariant <- function(x) {
   }
   return(outlist)
 }
-
 cpuFreq <- function(x) {
   outlist <- c()
   for (e in 1:length(x$cpu)) {
@@ -96,7 +93,6 @@ cpuFreq <- function(x) {
   }
   return(outlist)
 }
-
 cpuCores <- function(x) {
   outlist <- c()
   for (e in 1:length(x$cpu)) {
@@ -109,16 +105,19 @@ cpuCores <- function(x) {
   return(outlist)
 }
 
-rm(temp)
+# clean directory
+rm(temp, raw1, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores)
 
+# add new columns with cleaned cpu data
 laptop <- laptop %>% 
-  mutate(cpu_manufac = cpuMan(laptop), # extract manufacturer
-         cpu_model = cpuModel(laptop), # extract cpu model 
-         cpu_model_variant = cpuVariant(laptop), # extract cpu model variant
-         cpu_freq = cpuFreq(laptop), # extract cpu clock frequency
-         cpu_cores = cpuCores(laptop) # extract cpu cores
-         ) %>% 
-  select(-c(lencpu, cpu_cores))
+  add_column(cpu_manufac = cpuMan(laptop)) # extract manufacturer
+laptop <- laptop %>% 
+  add_column(cpu_model = cpuModel(laptop), # extract cpu model 
+             cpu_model_variant = cpuVariant(laptop), # extract cpu model variant
+             cpu_freq = cpuFreq(laptop), # extract cpu clock frequency
+             cpu_cores = cpuCores(laptop) # extract cpu cores
+             ) %>% 
+  select(-c(lencpu, cpu_cores, cpu))
   
 ```
 
