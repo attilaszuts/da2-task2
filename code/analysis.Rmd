@@ -12,7 +12,7 @@ abstract: "This analysis will try to answer how you can price a laptop based on 
 
 ```{r include=FALSE}
 rm(list = ls())
-library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments)
+library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments); library(car)
 laptops <- "data/raw/laptop-price/"
 raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
@@ -353,6 +353,8 @@ large_resid[large_resid$leverage > avg_leverage * 2,] # empty
 ## Multicollinearity
 
 ```{r include=FALSE}
+mean(vif(reg3))
+alias(reg3)
 
 ```
 
@@ -378,7 +380,7 @@ laptop %>%
 ## Independent errors
 
 ```{r include=FALSE}
-
+car::dwt(reg3) # no autocorrelation almost perfect
 ```
 
 Residuals
