@@ -195,7 +195,23 @@ laptop <- laptop %>%
          memory_type = relevel(as.factor(memory_type), ref = "ssd"),
          gpu_type = relevel(as.factor(gpu_type), ref = "integrated"),
          ln_price = log(price_euros))
+```
 
+
+```{r include=FALSE}
+# create training-test sample
+laptop_test <- sample(laptop, size = round(length(laptop$laptop_id)*0.2))
+
+## 80% of the sample size
+smp_size <- floor(0.8 * nrow(laptop))
+
+## set the seed to make your partition reproducible
+set.seed(123)
+train_ind <- sample(seq_len(nrow(laptop)), size = smp_size)
+
+laptop_all <- laptop
+laptop_test <- laptop[-train_ind, ]
+laptop <- laptop[train_ind, ]
 
 # clean directory
 rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
@@ -230,7 +246,17 @@ boxfun <- function(x) {
 give.n <- function(x){
    return(c(y = mean(x), label = length(x)))
 }
-
+# residuals function
+resids <- function(x, y) {
+  # x : data to use
+  # y : model to use
+  # x$reg3_pred_vals <- y$fitted.values
+  x$reg3_pred_vals <- predict(y, x)
+  x$reg3_res <- x$ln_price - x$reg3_pred_vals
+  x$reg3_pred_exp <- exp(x$reg3_pred_vals)
+  x$reg3_res_exp <- x$price_euros - x$reg3_pred_exp
+  return(x)
+}
 ```
 
 ```{r include=FALSE}
@@ -285,13 +311,7 @@ Residuals
 reg3 <- lm(step_formula, data = laptop)
 summary(reg3)
 
-laptop$reg3_pred_vals <- reg3$fitted.values
-
-laptop$reg3_res <- laptop$ln_price - laptop$reg3_pred_vals
-
-laptop$reg3_pred_exp <- exp(laptop$reg3_pred_vals)
-
-laptop$reg3_res_exp <- laptop$price_euros - laptop$reg3_pred_exp
+laptop <- resids(laptop, reg3)
 
 #overpriced
 laptop %>% 
@@ -333,3 +353,8 @@ laptop %>%
              ci_lwr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,2],
              ci_upr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,3])
 ```
+
+```{r}
+
+```
+
