@@ -184,9 +184,18 @@ laptop <- laptop %>%
 
 # change reference level
 laptop <- laptop %>% 
-  mutate(company = relevel(as.factor(company), ref = "Apple")) %>% 
+  mutate(company = relevel(as.factor(company), ref = "Lenovo")) %>% 
   pivot_longer(cols = c("screen_small", "screen_mid", "screen_big"), names_to = "screen_category") %>% 
-  filter(value == T)
+  filter(value == T) %>% 
+  mutate(type_name = relevel(as.factor(type_name), ref = "Notebook"),
+         op_sys = relevel(as.factor(op_sys), ref = "windows10"),
+         screen_category = relevel(as.factor(screen_category), ref = "screen_mid"),
+         resolution = relevel(as.factor(resolution), ref = "1920x1080"),
+         cpu_model = relevel(as.factor(cpu_model), ref = "core i7"),
+         memory_type = relevel(as.factor(memory_type), ref = "ssd"),
+         gpu_type = relevel(as.factor(gpu_type), ref = "integrated"),
+         ln_price = log(price_euros))
+
 
 # clean directory
 rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
@@ -202,9 +211,6 @@ skewness(log(laptop$price_euros))
 ggplot(aes(price_euros), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
 ggplot(aes(sqrt(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
 ggplot(aes(log(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
-
-laptop <- laptop %>% 
-  mutate(ln_price = log(price_euros))
 ```
 
 ```{r include=FALSE}
@@ -217,8 +223,14 @@ scatterfun <- function(x) {
 boxfun <- function(x) {
   ggplot(aes(x, ln_price), data = laptop) + 
     geom_boxplot() + 
-    theme_bw()
+    theme_bw() + 
+    stat_summary(fun.data = give.n, geom = "text")
 }
+# function to display sample size in boxplots
+give.n <- function(x){
+   return(c(y = mean(x), label = length(x)))
+}
+
 ```
 
 ```{r include=FALSE}
@@ -266,3 +278,10 @@ step_formula <- paste(step_formula[2], step_formula[1], step_formula[3])
 ```
 
 Extended model: `r step_formula`
+
+Residuals
+
+```{r}
+
+```
+
