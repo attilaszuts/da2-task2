@@ -304,23 +304,61 @@ step_formula <- paste(step_formula[2], step_formula[1], step_formula[3])
 Extended model: `r step_formula`
 
 # Model Assumptions
+```{r include=FALSE}
+reg3 <- lm(step_formula, data = laptop)
+
+laptop <- resids(laptop, reg3)
+```
+
 
 ## Outliers and influential cases
-```{r}
-laptop$reg3_resid <- resid(reg3)
+```{r include=FALSE}
+laptop$reg3_res <- resid(reg3)
 laptop$rstand <- rstandard(reg3)
 laptop$rstudent <- rstudent(reg3)
+laptop$cookd <- cooks.distance(reg3)
+laptop$dfbeta <- dfbeta(reg3)
+laptop$dffit <- dffits(reg3)
+laptop$leverage <- hatvalues(reg3)
+laptop$covratio <- covratio(reg3)
+
+# large residuals
+large_resid <- laptop[laptop$rstand > 2 | laptop$rstand < - 2,]
+large_resid <- large_resid[!is.na(large_resid$rstand),] %>% 
+  dplyr::select(laptop_id, company, product, price_euros, reg3_pred_exp, ln_price, reg3_pred_vals, rstand, cookd, leverage, covratio) %>% 
+  arrange(desc(abs(rstand)))
+
+# are large residuals also influential?
+k <- length(strsplit(x = gsub("~", "+", step_formula), split = " + ", fixed = T)[[1]]) - 1 # number of predictors variables in model
+n <- nrow(laptop) # number of observations
+
+
+# cooks distance
+large_resid[large_resid$cookd > 1,] # empty
+
+# covariance ratio
+cvr_upr <- 1 + (3*(k + 1) / n)
+cvr_lwr <- 1 - (3*(k + 1) / n)
+large_resid %>% 
+  mutate(cvr_crit = ifelse(cvr_lwr > covratio | cvr_upr < covratio, T, F)) %>% 
+  filter(cvr_crit) %>% 
+  dplyr::select(-cvr_crit) %>% 
+  arrange(desc(abs(covratio))) %>% view()
+
+# leverage
+avg_leverage <- k + 1/n
+large_resid[large_resid$leverage > avg_leverage * 2,] # empty
 ```
 
 ## Multicollinearity
 
-```{r}
+```{r include=FALSE}
 
 ```
 
 ## Residuals - homoskedasticity and normality
 
-```{r}
+```{r include=FALSE}
 laptop %>% 
   ggplot(aes(rstudent)) + 
   geom_histogram(fill = "grey", color = "black") + 
@@ -339,17 +377,14 @@ laptop %>%
 
 ## Independent errors
 
-```{r}
+```{r include=FALSE}
 
 ```
 
 Residuals
 
 ```{r include=FALSE}
-reg3 <- lm(step_formula, data = laptop)
 summary(reg3)
-
-laptop <- resids(laptop, reg3)
 
 #overpriced
 laptop %>% 
