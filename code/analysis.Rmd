@@ -45,7 +45,7 @@ Finally, I created an 80-20 train-test split.
 
 ```{r include=FALSE}
 rm(list = ls())
-library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments); library(car)
+library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments); library(car); library(texreg)
 laptops <- "data/raw/laptop-price/"
 raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
@@ -333,13 +333,25 @@ However this model contained [multicollinearity](#multicollinearity), so I had t
 reg3: `r step_formula`
 
 ```{r include=FALSE}
-reg3 <- lm(step_formula, data = laptop, singular.ok = F)
+reg3 <- lm(formula(step_formula), data = laptop)
 
 laptop <- resids(laptop, reg3)
 ```
 
 ## Model interpretation
 
+This model can be interpreted as giving the price percentage change, when we change a property. $exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU. We can see how the price changes, if we change some property of this model or we can also analyse residuals to find the best deal for a certain category.
+
+```{r  results='asis', echo=FALSE}
+texreg(list(reg1 , reg3),
+        type = 'html',
+        custom.model.names = c("Simple linear","Multiple linear regression"),
+        caption = "Modelling laptop prices",
+       custom.coef.names = c(),
+        include.ci = FALSE,
+       float.pos = 'h',
+       fontsize = 'small')
+```
 
 
 # Residual analysis
