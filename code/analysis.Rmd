@@ -291,13 +291,36 @@ laptop$reg3_res <- laptop$ln_price - laptop$reg3_pred_vals
 
 laptop$reg3_pred_exp <- exp(laptop$reg3_pred_vals)
 
+laptop$reg3_res_exp <- laptop$price_euros - laptop$reg3_pred_exp
+
+#overpriced
 laptop %>% 
   top_n(5, reg3_res) %>% 
   arrange(desc(reg3_res)) %>% 
   dplyr::select(company, product, price_euros, reg3_pred_exp)
+# underpriced
 laptop %>% 
   top_n(-5, reg3_res) %>% 
   arrange(reg3_res) %>% 
   dplyr::select(company, product, price_euros, reg3_pred_exp)
+```
+
+$\text{Y}-\hat{\text{Y}}$ plot
+
+```{r}
+laptop %>% 
+  ggplot(aes(reg3_pred_vals, ln_price)) + 
+  geom_point() + 
+  theme_bw() + 
+  labs(x = "Predicted log-price",
+       y = "Actual log-price",
+       title = "Y - Y hat plot")
+laptop %>% 
+  ggplot(aes(reg3_pred_exp, price_euros)) + 
+  geom_point() + 
+  theme_bw() + 
+  labs(x = "Predicted price",
+       y = "Actual price",
+       title = "Y - Y hat plot")
 ```
 
