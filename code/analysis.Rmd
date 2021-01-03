@@ -599,16 +599,6 @@ laptop %>%
        title = "Y - Y hat plot")
 ```
 
-## Prediction intervals
-
-```{r include=FALSE}
-laptop %>% 
-  add_column(pred_lwr = predict(reg3, newdata = laptop, interval = "prediction", alpha = 0.05)[,2],
-             pred_upr = predict(reg3, newdata = laptop, interval = "prediction", alpha = 0.05)[,3],
-             ci_lwr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,2],
-             ci_upr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,3])
-```
-
 ## Compare Train and Test model
 
 ```{r echo=FALSE, results = 'asis'}
