@@ -18,10 +18,31 @@ abstract: "This analysis will try to answer how you can price a laptop based on 
 
 Following my interest of tech gadgets I wanted to investigate a question, that was bothering me for a while. How can we accurately tell and compare prices of different laptops? It is hard by itself to price them, as usually they are priced at a premium than similar speced custom built PCs, not only because of the portability but also because the assembly costs. So in order to do this, I decided to build a linear regression model for pricing laptops based on their specifications (screen size, manufacturer, RAM, etc.)
 
-# Data cleaning steps
+# Data prep 
 
-train-test split
-dummy coding and baselines
+## Data collection
+
+- not representative, price can change based on release date
+- quality? -> no classical measurement error but can be still erroneous inputs (don't know the source, kaggle)
+- this is administrative data 
+- question -> does the price only depend on the specs? no, design, build quality, materials, marketing, etc. -> but otherwise it captures pretty much everything
+
+- everything will be a variable, except if it needs to be removed
+
+## Data cleaning
+
+- cleaning the strings (ram, weight, etc.) 
+- data mining screen -> is it IPS? is it touchscreen? -> creating new variables.function that extracts model, manufacturer, etc.
+- dummy coding and baselines:
+  - op_sys -> win10
+  - type_name -> Notebook
+  - screen_category -> screen_mid
+  - resolution -> 1920x1080
+  - cpu_model -> core i7
+  - memory_type -> ssd
+  - gpu_type -> integrated
+- train-test split (80-20)
+
 ```{r include=FALSE}
 rm(list = ls())
 library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments); library(car)
@@ -209,7 +230,6 @@ laptop <- laptop %>%
          ln_price = log(price_euros))
 ```
 
-
 ```{r include=FALSE}
 # create training-test sample
 ## 80% of the sample size
@@ -226,6 +246,11 @@ laptop <- laptop[train_ind, ]
 # clean directory
 rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
 ```
+
+## Descriptives
+
+> summary stats
+
 
 ```{r include=FALSE}
 summary(laptop$price_euros)
@@ -267,26 +292,6 @@ resids <- function(x, y) {
   x$reg3_res_exp <- x$price_euros - x$reg3_pred_exp
   return(x)
 }
-```
-
-```{r include=FALSE}
-boxfun(laptop$company)
-boxfun(laptop$type_name)
-scatterfun(laptop$inches)
-boxfun(laptop$screen_category)
-boxfun(laptop$touchscreen)
-boxfun(laptop$ips)
-boxfun(laptop$resolution)
-scatterfun(laptop$ram)
-scatterfun(laptop$gpu_type)
-boxfun(laptop$cpu_manufac)
-boxfun(laptop$cpu_model)
-scatterfun(laptop$cpu_freq)
-boxfun(laptop$memory_type)
-scatterfun(laptop$ssd_size)
-scatterfun(laptop$hdd_size)
-boxfun(laptop$op_sys)
-scatterfun(laptop$weight)
 ```
 
 # Model parameters
@@ -470,6 +475,7 @@ laptop %>%
        #title = "Y - Y hat plot")
 ```
 
+We can see on this plot, that 
 
 ```{r include=FALSE}
 laptop %>% 
@@ -495,3 +501,26 @@ laptop %>%
 
 ```
 
+# Appendix
+
+## Pattern of association between ln_price and predictors
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+boxfun(laptop$company)
+boxfun(laptop$type_name)
+scatterfun(laptop$inches)
+boxfun(laptop$screen_category)
+boxfun(laptop$touchscreen)
+boxfun(laptop$ips)
+boxfun(laptop$resolution)
+scatterfun(laptop$ram)
+scatterfun(laptop$gpu_type)
+boxfun(laptop$cpu_manufac)
+boxfun(laptop$cpu_model)
+scatterfun(laptop$cpu_freq)
+boxfun(laptop$memory_type)
+scatterfun(laptop$ssd_size)
+scatterfun(laptop$hdd_size)
+boxfun(laptop$op_sys)
+scatterfun(laptop$weight)
+```
