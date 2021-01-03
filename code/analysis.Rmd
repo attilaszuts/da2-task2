@@ -200,8 +200,6 @@ laptop <- laptop %>%
 
 ```{r include=FALSE}
 # create training-test sample
-laptop_test <- sample(laptop, size = round(length(laptop$laptop_id)*0.2))
-
 ## 80% of the sample size
 smp_size <- floor(0.8 * nrow(laptop))
 
@@ -304,6 +302,46 @@ step_formula <- paste(step_formula[2], step_formula[1], step_formula[3])
 ```
 
 Extended model: `r step_formula`
+
+# Model Assumptions
+
+## Outliers and influential cases
+```{r}
+laptop$reg3_resid <- resid(reg3)
+laptop$rstand <- rstandard(reg3)
+laptop$rstudent <- rstudent(reg3)
+```
+
+## Multicollinearity
+
+```{r}
+
+```
+
+## Residuals - homoskedasticity and normality
+
+```{r}
+laptop %>% 
+  ggplot(aes(rstudent)) + 
+  geom_histogram(fill = "grey", color = "black") + 
+  theme_bw() + 
+  labs(x = "Studentized residual",
+       y = "")
+
+laptop %>% 
+  ggplot(aes(reg3_pred_vals, rstudent)) + 
+  geom_point() + 
+  theme_bw() + 
+  geom_smooth(method = "lm", color = "blue") +
+  labs(x = "Fitted values",
+       y = "Studentized Residuals")
+```
+
+## Independent errors
+
+```{r}
+
+```
 
 Residuals
 
