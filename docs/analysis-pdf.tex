@@ -1,0 +1,979 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Laptop Pricing},
+  pdfauthor={Attila Szuts},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Laptop Pricing}
+\author{Attila Szuts}
+\date{02/01/2021}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+This analysis will try to answer how you can price a laptop based on its
+specifications and how you can try to find good deals among them. It
+uses 1300 data points to build a linear regression model on price using
+different properties like company that manufactured it, cpu model, RAM
+size, etc.
+\end{abstract}
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Following my interest of tech gadgets I wanted to investigate a
+question, that was bothering me for a while. How can we accurately tell
+and compare prices of different laptops? It is hard by itself to price
+them, as usually they are priced at a premium than similar speced custom
+built PCs, not only because of the portability but also because the
+assembly costs. So in order to do this, I decided to build a linear
+regression model for pricing laptops based on their specifications
+(screen size, manufacturer, RAM, etc.)
+
+\hypertarget{data-prep}{%
+\section{Data prep}\label{data-prep}}
+
+\hypertarget{data-collection}{%
+\subsection{Data collection}\label{data-collection}}
+
+Data was collected from
+\href{https://www.kaggle.com/muhammetvarl/laptop-price/}{kaggle}, thus I
+do not know the original source of it. Since this is similar to
+administrative data, it is likely that the values are accurate and there
+is no inherent classical measurement error present. However, there can
+still be some abnormalities that can distort the model. For example it
+might be very important from a pricing perspective how long ago since
+the laptop has been released, since prices tend to decrease after the
+initial hype. Also, it can happen quite easily that someone mistyped
+something if data was entered manually. The question still remains,
+which is that is price dependent exclusively on specs? Likely that no,
+there are other factors at play as well, such as design, build quality,
+materials used, marketing, etc. Also, there are some important
+properties not present, like battery size, number of ports, keyboard
+type, etc but for our purpose it will be a good enough approximation of
+price.
+
+To get as much information as possible, I will try to use all variables
+in the model, and I'll only exclude them if I have to.
+
+\hypertarget{data-cleaning}{%
+\subsection{Data cleaning}\label{data-cleaning}}
+
+I had to clean almost every variable, to clean numeric variables (RAM,
+SSD size, HDD size, etc.). Alongside this, I also had to mine
+information from different variables such as IPS, touchscreen properties
+of screens, or CPU model, manufacturer, frequency, etc. I created
+functions that could extract these informations into new ones.
+
+I recoded the baseline for my variables. I choose these partly based on
+my personal interest and also on sample size to consider the SE of the
+coefficients.
+
+\begin{itemize}
+\tightlist
+\item
+  Operating system -\textgreater{} windows 10
+\item
+  Company -\textgreater{} Lenovo
+\item
+  Type -\textgreater{} Notebook
+\item
+  Screen size category -\textgreater{} screen\_mid
+\item
+  Screen resolution -\textgreater{} 1920x1080
+\item
+  CPU model -\textgreater{} core i7
+\item
+  Memory type -\textgreater{} ssd
+\item
+  GPU type -\textgreater{} integrated
+\end{itemize}
+
+Finally, I created an 80-20 train-test split.
+
+\hypertarget{descriptives}{%
+\subsection{Descriptives}\label{descriptives}}
+
+We can see in the \protect\hyperlink{appendix}{appendix} that the log
+transformed version of prices is the closest to distribution.
+
+Detailed plots on the pattern of association between log-price and
+covariates can be found in the \protect\hyperlink{appendix}{appendix}.
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-5}Summary statistics for price}
+\centering
+\begin{tabular}[t]{r|r|r|r|r|r}
+\hline
+Min. & 1st Qu. & Median & Mean & 3rd Qu. & Max.\\
+\hline
+174 & 598.9225 & 979 & 1117.583 & 1468.75 & 6099\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{model-parameters}{%
+\section{Model parameters}\label{model-parameters}}
+
+For the baseline model I am going to use a simple regression of log
+price on the manufacturer company. I decided to use ln prices, as it was
+skewed to the left, having a long right tail and this transformation
+made it normal. This model gives the average price percentage change for
+each manufacturer compared to a baseline, which in this case is Lenovo.
+
+reg1: ln\_price \textasciitilde{} company
+
+To find out which coefficients provide the best fit for my data I ran a
+simulation to find the best possible fit using AIC with the
+\texttt{stepAIC} function.
+
+However this model contained
+\protect\hyperlink{multicollinearity}{multicollinearity}, so I had to
+drop some variables. After this step I came up with the final form:
+
+reg3: ln\_price \textasciitilde{} company + type\_name + inches + ram +
+screen\_category + cpu\_model + memory\_type + ssd\_size + hdd\_size
+
+\hypertarget{model-interpretation}{%
+\subsection{Model interpretation}\label{model-interpretation}}
+
+This model can be interpreted as giving the price percentage change,
+when we change a property. \(exp(\alpha)\) gives us the average price
+for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized
+FullHD display, SSD and integrated GPU which is 765.7421174 Euros. We
+can see how the price changes, if we change some property of this
+imaginary laptop or we can also analyse residuals to find the best deal
+for a certain category. You can find the detailed comparison in the
+\protect\hyperlink{detailed-model-comparison}{appendix}.
+
+We can see that among the companies, Lenovo is somewhere in the lower
+end having quite a few more expensive counterparts (e.g.~Apple), but
+also having more budget options (e.g.~Acer).
+
+Ultrabooks, Gaming, Convertible and workstation products are all
+significantly more expensive compared to Notebooks. Netbooks are
+cheaper, but marginally and insignificantly.
+
+Inches, that is screen size is not a significant predictor, however, the
+categories were significant. Both smaller and larger screens are around
+20\% more expensive compared to medium sized screens. This is probably
+because of other factors (like premium devices being smaller so they are
+more portable or gaming pcs having large screens).
+
+1GB more RAM will cost you 2\% more on average.
+
+The Intel core i7 is a very expensive cpu, and virtually any other
+option will cost you less (sometimes even as much as 70\%!). This is a
+very interesting finding, since the CPU is basically the heart of the
+machine, if you can find a suitable cpu for your needs, then you can
+potentially save a lot on a pc. But in this paper I am not going to go
+into more details on this for obvious reasons.
+
+Having both SSD and HDD will be 23\% higher on average compared to
+having only SSD. However, interestingly 1 GB more storage is associated
+with just a fraction of a percent higher prices on average. But this can
+still be an impactful coefficient if we investigate the standardized
+betas.
+
+If you are interested which properties of a laptop are the most
+important, you can take a look at the
+\protect\hyperlink{standardized-residuals}{appendix} where I dive into
+more detail on the coefficients, and investigate the standardized
+version of them which can tell us how much they impact the slope of the
+regression compared to each other. As I suspected earlier, the most
+important of them are RAM size, CPU type, SSD and HDD size and finally
+screen size category.
+
+Our model has a very high \(R^2=0.85\) compared to the baseline
+\(R^2=0.16\). I think, this is a relatively accurate and robust result.
+We will check this with test sample.
+
+\hypertarget{residual-analysis}{%
+\section{Residual analysis}\label{residual-analysis}}
+
+Now that we are sure our model met all our assumptions (that can be
+checked in the \protect\hyperlink{model-assumptions}{appendix} we can
+analyse the residuals to find the most valuable deals. I limited the
+results to be under €2000 because above that it might be that our model
+is less accurate and there are other factors in pricing premium products
+as well. Based on this, we get the following results.
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-11}Underpriced laptops}
+\centering
+\begin{tabular}[t]{l|l|r|r}
+\hline
+Company & Product Name & Price - Actual & Price - Predicted\\
+\hline
+Asus & G701VO-IH74K (i7-6820HK/32GB/2x & 1279.0 & 2365.0639\\
+\hline
+HP & 250 G6 & 393.9 & 718.2363\\
+\hline
+HP & 15-BS101nv (i7-8550U/8GB/256GB/FHD/W10) & 659.0 & 1189.7375\\
+\hline
+Lenovo & IdeaPad 510s-14IKB & 799.0 & 1417.9101\\
+\hline
+Lenovo & Yoga 500-14ISK & 638.0 & 1115.8852\\
+\hline
+Lenovo & Yoga 500-14ISK & 638.0 & 1115.8852\\
+\hline
+\end{tabular}
+\end{table}
+
+\hypertarget{robustness-checks}{%
+\section{Robustness checks}\label{robustness-checks}}
+
+Let us see now the test sample results, how well does the model predict
+laptop prices.
+
+You can see in the appendix the detailed comparison, but for the most
+part, all coefficients are the same (except for cases where the group
+size is small). The \(R^2=0.86\) is also very similar to the one we got
+with the training sample. So we can say it with confidence that there is
+some reality to our model, if this sample is representative. The
+\(\text{Y} - \hat{\text{Y}}\) plot is showing a good fit as well.
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+One more thing that I find worth mentioning is the case of overfitting.
+This might be the case, since we have a lot of different variables,
+however it is very hard to say anything about this. Hopefully thinking
+about external validity and finding different datasets that could be
+tested with this model could help shed some light on this question.
+
+One of the most useful things to do with this model is to test it with
+prices from a different time. Maybe there we could uncover different
+patterns of associations for different laptops. For example, low-end
+pc-s price might drop significantly after release, but their performance
+could drop even faster so getting a deal on them might not be worth it.
+Similarly, high-end gaming laptops can hold their prices for a longer
+period of time and dropping in relative performance but not as much, so
+it would be worth it to buy it. It would also be interesting to see and
+try to fit this model on PCs or Smartphones as they share a lot of
+similiar properties.
+
+\hypertarget{summary}{%
+\section{Summary}\label{summary}}
+
+Finally, let me wrap up the findings here. All in all, the model I built
+fits the data very well and is suitable to find underpriced laptops.
+\(Exp(\alpha)\) gives us the average price for a Lenovo Notebook with
+Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and
+integrated GPU which is 765.74 Euros. The most influential coefficients
+in the model were RAM size, CPU type, SSD and HDD size and finally,
+screen size category.
+
+To make it more useful, and develop this project further, it would be a
+great next step, to investigate the question of external validity. It
+would be great if I could find data on different properties (for example
+benchmark scores on performance for each model) and try to model price
+with those or build a competing model with this and compare them. Or it
+would be another interesting research topic to try and model the price
+conditioned on the number of days since release. To investigate external
+validity even further one could try to apply this model on a dataset
+with PCs and Smartphones.
+
+\hypertarget{appendix}{%
+\section{Appendix}\label{appendix}}
+
+\hypertarget{log-price-distribution}{%
+\subsection{Log Price distribution}\label{log-price-distribution}}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf}
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-14-2.pdf}
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-14-3.pdf}
+
+\hypertarget{pattern-of-association-between-ln_price-and-predictors}{%
+\subsection{Pattern of association between ln\_price and
+predictors}\label{pattern-of-association-between-ln_price-and-predictors}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{company)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{type_name)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scatterfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{inches)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{screen_category)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{touchscreen)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{ips)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{resolution)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scatterfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{ram)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scatterfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{gpu_type)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-9.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{cpu_manufac)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-10.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{cpu_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-11.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scatterfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{cpu_freq)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-12.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{memory_type)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-13.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scatterfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{ssd_size)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-14.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scatterfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{hdd_size)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-15.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{op_sys)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-16.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{scatterfun}\NormalTok{(laptop}\OperatorTok{$}\NormalTok{weight)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-15-17.pdf}
+
+\hypertarget{model-assumptions}{%
+\subsection{Model Assumptions}\label{model-assumptions}}
+
+To see if my model meets all the assumptions of multiple linear
+regression I will investigate outliers and influential cases,
+multicollinearity, residuals and the independence of errors.
+
+\hypertarget{outliers-and-influential-cases}{%
+\subsubsection{Outliers and influential
+cases}\label{outliers-and-influential-cases}}
+
+There are in total 52 outliers. This in itself is not necessarily a bad
+thing, it might be that they are very good deals. However it is worth
+taking a look at them to see if they exert undue influence on the model
+which could in turn distort the results. Investigating the cook's
+distance of the outliers we can find that there ar 0 observation above 1
+which means they are not influential cases.
+
+\hypertarget{multicollinearity}{%
+\subsubsection{Multicollinearity}\label{multicollinearity}}
+
+Upon inspecting the first model (reg3), I found that there is
+multicollinearity among the variables. So I had to investigate which
+variables cause this, and I found that there was multicollinearity among
+the operating system, resolution, gpu type and cpu model confounders. I
+experimented to see if there are some combination of these variables
+that can be included in the model, without multicollinearity but only
+the cpu model could be used. So due to this, I had to go back and
+exclude the aforementioned variables. But even with this modification,
+there still may be some multicollinearity among my variables, as the
+average VIF is above 1.
+
+Multicollinearity is an issue, since it limits the \(R^2\) of the model
+and increases the SE of the \(\beta\) coefficients. This makes it more
+difficult to interpret the results and the model parameters will vary a
+lot based on the sample provided.
+
+\hypertarget{residuals---homoskedasticity-and-normality}{%
+\subsubsection{Residuals - homoskedasticity and
+normality}\label{residuals---homoskedasticity-and-normality}}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+We can see on this plot, that the residuals are normally distributed,
+because they follow a bell-shaped curve.
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+And on this plot we can see, that there is no heteroskedasticity or
+non-linearity in the data: points are scattered all over at random.
+
+\hypertarget{independent-errors}{%
+\subsubsection{Independent errors}\label{independent-errors}}
+
+The Durbin-Watson test is 2.0345952272064, so the errors are independent
+in the sample.
+
+\hypertarget{detailed-model-comparison}{%
+\subsection{Detailed model comparison}\label{detailed-model-comparison}}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l c c}
+\hline
+ & Baseline - simple linear & Extended - Multiple regression \\
+\hline
+(Intercept)                   & $6.76$  & $6.64^{***}$  \\
+                              & $$      & $(0.39)$      \\
+companyAcer                   & $-0.44$ & $-0.09^{**}$  \\
+                              & $$      & $(0.03)$      \\
+companyApple                  & $0.53$  & $0.15^{*}$    \\
+                              & $$      & $(0.07)$      \\
+companyAsus                   & $0.05$  & $-0.04$       \\
+                              & $$      & $(0.03)$      \\
+companyChuwi                  & $-1.05$ & $0.22$        \\
+                              & $$      & $(0.20)$      \\
+companyDell                   & $0.17$  & $0.03$        \\
+                              & $$      & $(0.02)$      \\
+companyFujitsu                & $-0.18$ & $-0.11$       \\
+                              & $$      & $(0.17)$      \\
+companyGoogle                 & $0.64$  & $0.16$        \\
+                              & $$      & $(0.15)$      \\
+companyHP                     & $0.06$  & $0.07^{**}$   \\
+                              & $$      & $(0.02)$      \\
+companyHuawei                 & $0.50$  & $0.01$        \\
+                              & $$      & $(0.18)$      \\
+companyLG                     & $0.93$  & $0.43^{*}$    \\
+                              & $$      & $(0.18)$      \\
+companyMediacom               & $-1.10$ & $0.08$        \\
+                              & $$      & $(0.16)$      \\
+companyMicrosoft              & $0.57$  & $0.18$        \\
+                              & $$      & $(0.10)$      \\
+companyMSI                    & $0.62$  & $0.02$        \\
+                              & $$      & $(0.05)$      \\
+companyRazer                  & $1.17$  & $0.23^{*}$    \\
+                              & $$      & $(0.10)$      \\
+companySamsung                & $-0.03$ & $0.04$        \\
+                              & $$      & $(0.14)$      \\
+companyToshiba                & $0.30$  & $0.16^{***}$  \\
+                              & $$      & $(0.04)$      \\
+companyVero                   & $-1.41$ & $-0.06$       \\
+                              & $$      & $(0.31)$      \\
+companyXiaomi                 & $0.18$  & $-0.03$       \\
+                              & $$      & $(0.14)$      \\
+type\_name2 in 1 Convertible  &         & $0.10^{**}$   \\
+                              &         & $(0.03)$      \\
+type\_nameGaming              &         & $0.21^{***}$  \\
+                              &         & $(0.03)$      \\
+type\_nameNetbook             &         & $-0.04$       \\
+                              &         & $(0.08)$      \\
+type\_nameUltrabook           &         & $0.14^{***}$  \\
+                              &         & $(0.03)$      \\
+type\_nameWorkstation         &         & $0.66^{***}$  \\
+                              &         & $(0.06)$      \\
+inches                        &         & $-0.01$       \\
+                              &         & $(0.02)$      \\
+ram                           &         & $0.02^{***}$  \\
+                              &         & $(0.00)$      \\
+screen\_categoryscreen\_big   &         & $0.19^{***}$  \\
+                              &         & $(0.05)$      \\
+screen\_categoryscreen\_small &         & $0.21^{***}$  \\
+                              &         & $(0.05)$      \\
+cpu\_modela10-series          &         & $-0.38^{***}$ \\
+                              &         & $(0.10)$      \\
+cpu\_modela12-series          &         & $-0.32^{**}$  \\
+                              &         & $(0.10)$      \\
+cpu\_modela4-series           &         & $-0.88^{***}$ \\
+                              &         & $(0.25)$      \\
+cpu\_modela6-series           &         & $-0.78^{***}$ \\
+                              &         & $(0.10)$      \\
+cpu\_modela8-series           &         & $-0.68^{**}$  \\
+                              &         & $(0.25)$      \\
+cpu\_modela9-series           &         & $-0.59^{***}$ \\
+                              &         & $(0.07)$      \\
+cpu\_modelatom x5-z8300       &         & $-1.37^{***}$ \\
+                              &         & $(0.32)$      \\
+cpu\_modelatom x5-z8350       &         & $-1.39^{***}$ \\
+                              &         & $(0.19)$      \\
+cpu\_modelatom x5-z8550       &         & $-0.92^{***}$ \\
+                              &         & $(0.17)$      \\
+cpu\_modelatom z8350          &         & $-1.40^{***}$ \\
+                              &         & $(0.30)$      \\
+cpu\_modelceleron             &         & $-1.01^{***}$ \\
+                              &         & $(0.04)$      \\
+cpu\_modelcore i3             &         & $-0.47^{***}$ \\
+                              &         & $(0.03)$      \\
+cpu\_modelcore i5             &         & $-0.13^{***}$ \\
+                              &         & $(0.02)$      \\
+cpu\_modelcore m              &         & $-0.25^{***}$ \\
+                              &         & $(0.07)$      \\
+cpu\_modelcortex              &         & $-0.51$       \\
+                              &         & $(0.29)$      \\
+cpu\_modele-series            &         & $-1.05^{***}$ \\
+                              &         & $(0.10)$      \\
+cpu\_modelfx                  &         & $-0.47^{**}$  \\
+                              &         & $(0.18)$      \\
+cpu\_modelpentium             &         & $-0.70^{***}$ \\
+                              &         & $(0.05)$      \\
+cpu\_modelryzen               &         & $-0.02$       \\
+                              &         & $(0.13)$      \\
+cpu\_modelxeon                &         & $0.20$        \\
+                              &         & $(0.15)$      \\
+memory\_typeboth              &         & $0.23^{***}$  \\
+                              &         & $(0.05)$      \\
+memory\_typehdd               &         & $0.08$        \\
+                              &         & $(0.04)$      \\
+ssd\_size                     &         & $0.00^{***}$  \\
+                              &         & $(0.00)$      \\
+hdd\_size                     &         & $-0.00^{**}$  \\
+                              &         & $(0.00)$      \\
+\hline
+R$^2$                         & $0.17$  & $0.85$        \\
+Adj. R$^2$                    & $0.16$  & $0.85$        \\
+Num. obs.                     & $1042$  & $1042$        \\
+RMSE                          & $0.57$  & $$            \\
+\hline
+\multicolumn{3}{l}{\scriptsize{$^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$}}
+\end{tabular}
+\caption{Comparing laptop price models}
+\label{table:coefficients}
+\end{center}
+\end{table}
+
+\hypertarget{standardized-residuals}{%
+\subsection{Standardized residuals}\label{standardized-residuals}}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l c}
+\hline
+ & Extended - Multiple regression \\
+\hline
+(Intercept)                   & $0.00^{***}$  \\
+                              & $(0.39)$      \\
+companyAcer                   & $-0.04^{**}$  \\
+                              & $(0.03)$      \\
+companyApple                  & $0.03^{*}$    \\
+                              & $(0.07)$      \\
+companyAsus                   & $-0.02$       \\
+                              & $(0.03)$      \\
+companyChuwi                  & $0.02$        \\
+                              & $(0.20)$      \\
+companyDell                   & $0.02$        \\
+                              & $(0.02)$      \\
+companyFujitsu                & $-0.01$       \\
+                              & $(0.17)$      \\
+companyGoogle                 & $0.01$        \\
+                              & $(0.15)$      \\
+companyHP                     & $0.05^{**}$   \\
+                              & $(0.02)$      \\
+companyHuawei                 & $0.00$        \\
+                              & $(0.18)$      \\
+companyLG                     & $0.03^{*}$    \\
+                              & $(0.18)$      \\
+companyMediacom               & $0.01$        \\
+                              & $(0.16)$      \\
+companyMicrosoft              & $0.02$        \\
+                              & $(0.10)$      \\
+companyMSI                    & $0.01$        \\
+                              & $(0.05)$      \\
+companyRazer                  & $0.03^{*}$    \\
+                              & $(0.10)$      \\
+companySamsung                & $0.00$        \\
+                              & $(0.14)$      \\
+companyToshiba                & $0.05^{***}$  \\
+                              & $(0.04)$      \\
+companyVero                   & $-0.00$       \\
+                              & $(0.31)$      \\
+companyXiaomi                 & $-0.00$       \\
+                              & $(0.14)$      \\
+type\_name2 in 1 Convertible  & $0.05^{**}$   \\
+                              & $(0.03)$      \\
+type\_nameGaming              & $0.12^{***}$  \\
+                              & $(0.03)$      \\
+type\_nameNetbook             & $-0.01$       \\
+                              & $(0.08)$      \\
+type\_nameUltrabook           & $0.08^{***}$  \\
+                              & $(0.03)$      \\
+type\_nameWorkstation         & $0.16^{***}$  \\
+                              & $(0.06)$      \\
+inches                        & $-0.02$       \\
+                              & $(0.02)$      \\
+ram                           & $0.19^{***}$  \\
+                              & $(0.00)$      \\
+screen\_categoryscreen\_big   & $0.10^{***}$  \\
+                              & $(0.05)$      \\
+screen\_categoryscreen\_small & $0.16^{***}$  \\
+                              & $(0.05)$      \\
+cpu\_modela10-series          & $-0.05^{***}$ \\
+                              & $(0.10)$      \\
+cpu\_modela12-series          & $-0.04^{**}$  \\
+                              & $(0.10)$      \\
+cpu\_modela4-series           & $-0.04^{***}$ \\
+                              & $(0.25)$      \\
+cpu\_modela6-series           & $-0.10^{***}$ \\
+                              & $(0.10)$      \\
+cpu\_modela8-series           & $-0.03^{**}$  \\
+                              & $(0.25)$      \\
+cpu\_modela9-series           & $-0.10^{***}$ \\
+                              & $(0.07)$      \\
+cpu\_modelatom x5-z8300       & $-0.07^{***}$ \\
+                              & $(0.32)$      \\
+cpu\_modelatom x5-z8350       & $-0.15^{***}$ \\
+                              & $(0.19)$      \\
+cpu\_modelatom x5-z8550       & $-0.08^{***}$ \\
+                              & $(0.17)$      \\
+cpu\_modelatom z8350          & $-0.07^{***}$ \\
+                              & $(0.30)$      \\
+cpu\_modelceleron             & $-0.42^{***}$ \\
+                              & $(0.04)$      \\
+cpu\_modelcore i3             & $-0.23^{***}$ \\
+                              & $(0.03)$      \\
+cpu\_modelcore i5             & $-0.10^{***}$ \\
+                              & $(0.02)$      \\
+cpu\_modelcore m              & $-0.05^{***}$ \\
+                              & $(0.07)$      \\
+cpu\_modelcortex              & $-0.03$       \\
+                              & $(0.29)$      \\
+cpu\_modele-series            & $-0.14^{***}$ \\
+                              & $(0.10)$      \\
+cpu\_modelfx                  & $-0.03^{**}$  \\
+                              & $(0.18)$      \\
+cpu\_modelpentium             & $-0.17^{***}$ \\
+                              & $(0.05)$      \\
+cpu\_modelryzen               & $-0.00$       \\
+                              & $(0.13)$      \\
+cpu\_modelxeon                & $0.02$        \\
+                              & $(0.15)$      \\
+memory\_typeboth              & $0.14^{***}$  \\
+                              & $(0.05)$      \\
+memory\_typehdd               & $0.06$        \\
+                              & $(0.04)$      \\
+ssd\_size                     & $0.19^{***}$  \\
+                              & $(0.00)$      \\
+hdd\_size                     & $-0.09^{**}$  \\
+                              & $(0.00)$      \\
+\hline
+R$^2$                         & $0.85$        \\
+Adj. R$^2$                    & $0.85$        \\
+Sigma                         & $0.24$        \\
+Statistic                     & $113.18$      \\
+P Value                       & $0.00$        \\
+DF                            & $51.00$       \\
+Log Likelihood                & $17.43$       \\
+AIC                           & $71.14$       \\
+BIC                           & $333.43$      \\
+Deviance                      & $59.00$       \\
+DF Resid.                     & $990$         \\
+nobs                          & $1042$        \\
+\hline
+\multicolumn{2}{l}{\scriptsize{$^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$}}
+\end{tabular}
+\caption{Standardised Beta}
+\label{table:coefficients}
+\end{center}
+\end{table}
+
+\hypertarget{y---y-hat-plot}{%
+\subsection{Y - Y hat plot}\label{y---y-hat-plot}}
+
+\includegraphics{analysis-pdf_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+We can see on this plot, that the predicted values fit the actual values
+fairly well.
+
+\hypertarget{compare-train-and-test-model}{%
+\subsection{Compare Train and Test
+model}\label{compare-train-and-test-model}}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{l c c}
+\hline
+ & Training model & Testing model \\
+\hline
+(Intercept)                   & $6.64^{***}$  & $6.29^{***}$  \\
+                              & $(0.39)$      & $(0.87)$      \\
+companyAcer                   & $-0.09^{**}$  & $-0.08$       \\
+                              & $(0.03)$      & $(0.07)$      \\
+companyApple                  & $0.15^{*}$    & $0.09$        \\
+                              & $(0.07)$      & $(0.14)$      \\
+companyAsus                   & $-0.04$       & $-0.03$       \\
+                              & $(0.03)$      & $(0.06)$      \\
+companyChuwi                  & $0.22$        &               \\
+                              & $(0.20)$      &               \\
+companyDell                   & $0.03$        & $0.10^{*}$    \\
+                              & $(0.02)$      & $(0.05)$      \\
+companyFujitsu                & $-0.11$       & $0.07$        \\
+                              & $(0.17)$      & $(0.24)$      \\
+companyGoogle                 & $0.16$        &               \\
+                              & $(0.15)$      &               \\
+companyHP                     & $0.07^{**}$   & $0.07$        \\
+                              & $(0.02)$      & $(0.05)$      \\
+companyHuawei                 & $0.01$        &               \\
+                              & $(0.18)$      &               \\
+companyLG                     & $0.43^{*}$    & $0.10$        \\
+                              & $(0.18)$      & $(0.24)$      \\
+companyMediacom               & $0.08$        & $-0.30$       \\
+                              & $(0.16)$      & $(0.27)$      \\
+companyMicrosoft              & $0.18$        &               \\
+                              & $(0.10)$      &               \\
+companyMSI                    & $0.02$        & $0.16$        \\
+                              & $(0.05)$      & $(0.10)$      \\
+companyRazer                  & $0.23^{*}$    & $0.21$        \\
+                              & $(0.10)$      & $(0.27)$      \\
+companySamsung                & $0.04$        & $0.18$        \\
+                              & $(0.14)$      & $(0.12)$      \\
+companyToshiba                & $0.16^{***}$  & $0.10$        \\
+                              & $(0.04)$      & $(0.09)$      \\
+companyVero                   & $-0.06$       & $-0.37^{*}$   \\
+                              & $(0.31)$      & $(0.18)$      \\
+companyXiaomi                 & $-0.03$       & $0.09$        \\
+                              & $(0.14)$      & $(0.24)$      \\
+type\_name2 in 1 Convertible  & $0.10^{**}$   & $0.16^{**}$   \\
+                              & $(0.03)$      & $(0.06)$      \\
+type\_nameGaming              & $0.21^{***}$  & $0.16$        \\
+                              & $(0.03)$      & $(0.08)$      \\
+type\_nameNetbook             & $-0.04$       & $-0.02$       \\
+                              & $(0.08)$      & $(0.16)$      \\
+type\_nameUltrabook           & $0.14^{***}$  & $0.23^{***}$  \\
+                              & $(0.03)$      & $(0.06)$      \\
+type\_nameWorkstation         & $0.66^{***}$  & $0.54^{***}$  \\
+                              & $(0.06)$      & $(0.11)$      \\
+inches                        & $-0.01$       & $0.01$        \\
+                              & $(0.02)$      & $(0.05)$      \\
+ram                           & $0.02^{***}$  & $0.03^{***}$  \\
+                              & $(0.00)$      & $(0.00)$      \\
+screen\_categoryscreen\_big   & $0.19^{***}$  & $0.05$        \\
+                              & $(0.05)$      & $(0.11)$      \\
+screen\_categoryscreen\_small & $0.21^{***}$  & $0.18$        \\
+                              & $(0.05)$      & $(0.11)$      \\
+cpu\_modela10-series          & $-0.38^{***}$ &               \\
+                              & $(0.10)$      &               \\
+cpu\_modela12-series          & $-0.32^{**}$  & $-0.38^{*}$   \\
+                              & $(0.10)$      & $(0.17)$      \\
+cpu\_modela4-series           & $-0.88^{***}$ &               \\
+                              & $(0.25)$      &               \\
+cpu\_modela6-series           & $-0.78^{***}$ & $-0.77^{***}$ \\
+                              & $(0.10)$      & $(0.13)$      \\
+cpu\_modela8-series           & $-0.68^{**}$  & $-0.58^{***}$ \\
+                              & $(0.25)$      & $(0.15)$      \\
+cpu\_modela9-series           & $-0.59^{***}$ & $-0.45^{***}$ \\
+                              & $(0.07)$      & $(0.13)$      \\
+cpu\_modelatom x5-z8300       & $-1.37^{***}$ &               \\
+                              & $(0.32)$      &               \\
+cpu\_modelatom x5-z8350       & $-1.39^{***}$ & $-1.26^{***}$ \\
+                              & $(0.19)$      & $(0.22)$      \\
+cpu\_modelatom x5-z8550       & $-0.92^{***}$ & $-0.44$       \\
+                              & $(0.17)$      & $(0.31)$      \\
+cpu\_modelatom z8350          & $-1.40^{***}$ &               \\
+                              & $(0.30)$      &               \\
+cpu\_modelceleron             & $-1.01^{***}$ & $-0.91^{***}$ \\
+                              & $(0.04)$      & $(0.10)$      \\
+cpu\_modelcore i3             & $-0.47^{***}$ & $-0.47^{***}$ \\
+                              & $(0.03)$      & $(0.06)$      \\
+cpu\_modelcore i5             & $-0.13^{***}$ & $-0.12^{**}$  \\
+                              & $(0.02)$      & $(0.04)$      \\
+cpu\_modelcore m              & $-0.25^{***}$ & $-0.05$       \\
+                              & $(0.07)$      & $(0.19)$      \\
+cpu\_modelcortex              & $-0.51$       &               \\
+                              & $(0.29)$      &               \\
+cpu\_modele-series            & $-1.05^{***}$ & $-0.91^{***}$ \\
+                              & $(0.10)$      & $(0.18)$      \\
+cpu\_modelfx                  & $-0.47^{**}$  &               \\
+                              & $(0.18)$      &               \\
+cpu\_modelpentium             & $-0.70^{***}$ & $-0.50^{***}$ \\
+                              & $(0.05)$      & $(0.12)$      \\
+cpu\_modelryzen               & $-0.02$       &               \\
+                              & $(0.13)$      &               \\
+cpu\_modelxeon                & $0.20$        & $0.35$        \\
+                              & $(0.15)$      & $(0.27)$      \\
+memory\_typeboth              & $0.23^{***}$  & $0.38^{***}$  \\
+                              & $(0.05)$      & $(0.11)$      \\
+memory\_typehdd               & $0.08$        & $0.17^{*}$    \\
+                              & $(0.04)$      & $(0.09)$      \\
+ssd\_size                     & $0.00^{***}$  & $0.00^{***}$  \\
+                              & $(0.00)$      & $(0.00)$      \\
+hdd\_size                     & $-0.00^{**}$  & $-0.00^{**}$  \\
+                              & $(0.00)$      & $(0.00)$      \\
+\hline
+R$^2$                         & $0.85$        & $0.88$        \\
+Adj. R$^2$                    & $0.85$        & $0.86$        \\
+Num. obs.                     & $1042$        & $261$         \\
+\hline
+\multicolumn{3}{l}{\scriptsize{$^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$}}
+\end{tabular}
+\caption{Modelling laptop prices}
+\label{table:coefficients}
+\end{center}
+\end{table}
+
+\end{document}
