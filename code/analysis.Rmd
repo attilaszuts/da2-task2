@@ -22,7 +22,7 @@ Following my interest of tech gadgets I wanted to investigate a question, that w
 
 ## Data collection
 
-Data was collected from kaggle, thus I do not know the original source of it. Since this is similar to administrative data, it is likely that the values are accurate and there is no inherent classical measurement error present. However, there can still be some abnormalities that can distort the model. For example it might be very important from a pricing perspective how long the laptop was released, since prices tend to decrease after the initial hype. Also, it can happen quite easily that someone mistyped something if data was entered manually. The question still remains, that is price dependent only on specs? Likely, that no, there are other factors at play as well, such as design, build quality, materials used, marketing, etc. Also, it misses some important properties, like battery size, number of ports, keyboard type, etc but for our purpose it will be a good enough approximation of price.
+Data was collected from [kaggle](https://www.kaggle.com/muhammetvarl/laptop-price/), thus I do not know the original source of it. Since this is similar to administrative data, it is likely that the values are accurate and there is no inherent classical measurement error present. However, there can still be some abnormalities that can distort the model. For example it might be very important from a pricing perspective how long ago since the laptop has been released, since prices tend to decrease after the initial hype. Also, it can happen quite easily that someone mistyped something if data was entered manually. The question still remains, which is that is price dependent exclusively on specs? Likely that no, there are other factors at play as well, such as design, build quality, materials used, marketing, etc. Also, there are some important properties not present, like battery size, number of ports, keyboard type, etc but for our purpose it will be a good enough approximation of price.
 
 To get as much information as possible, I will try to use all variables in the model, and I'll only exclude them if I have to.
 
@@ -31,6 +31,7 @@ To get as much information as possible, I will try to use all variables in the m
 I had to clean almost every variable, to clean numeric variables (RAM, SSD size, HDD size, etc.). Alongside this, I also had to mine information from different variables such as IPS, touchscreen properties of screens, or CPU model, manufacturer, frequency, etc. I created functions that could extract these informations into new ones. 
 
 I recoded the baseline for my variables 
+
 - Operating system -> windows 10
 - Type -> Notebook
 - Screen size category -> screen_mid
