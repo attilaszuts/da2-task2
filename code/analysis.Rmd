@@ -12,7 +12,7 @@ abstract: "This analysis will try to answer how you can price a laptop based on 
 
 ```{r include=FALSE}
 rm(list = ls())
-library(tidyverse); library(janitor); library(estimatr); library(MASS)
+library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments)
 laptops <- "data/raw/laptop-price/"
 raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
