@@ -353,7 +353,9 @@ large_resid[large_resid$leverage > avg_leverage * 2,] # empty
 
 ## Multicollinearity
 
-Upon inspecting the first model (reg3), I found that there is multicollinearity among the variables. So I had to investigate which variables cause this, and I found that there was multicollinearity among the operating system, resolution gpu type and cpu model. I experimented to see if there are some combination of these variables that can be included in the model, without multicollinearity but only the cpu model could be used. So due to this, I had to go back and exclude the aforementioned variables.
+Upon inspecting the first model (reg3), I found that there is multicollinearity among the variables. So I had to investigate which variables cause this, and I found that there was multicollinearity among the operating system, resolution gpu type and cpu model. I experimented to see if there are some combination of these variables that can be included in the model, without multicollinearity but only the cpu model could be used. So due to this, I had to go back and exclude the aforementioned variables. But even with this modification, there still may be some collinearity among my variables, as the average VIF is above 1.
+
+Multicollinearity is an issue, since it limits the $R^2$ of the model and increases the SE of the $\beta$ coefficients. This makes it more difficult to interpret the results. 
 
 > todo
 
