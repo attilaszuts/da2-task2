@@ -318,3 +318,9 @@ laptop$rstudent <- rstudent(reg3)
 laptop %>% 
   ggplot(aes(fitted, rstudent)) + 
   geom_point()
+
+
+# multicollinearity -------------------------------------------------------
+
+names(reg3$coefficients[is.na(reg3$coefficients)])
+
