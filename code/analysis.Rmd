@@ -225,7 +225,7 @@ boxfun <- function(x) {
 boxfun(laptop$company)
 boxfun(laptop$type_name)
 scatterfun(laptop$inches)
-laptop %>% pivot_longer(cols = c("screen_small", "screen_mid", "screen_big"), names_to = "screen_category") %>% filter(value == T) %$% boxfun(screen_category)
+boxfun(laptop$screen_category)
 boxfun(laptop$touchscreen)
 boxfun(laptop$ips)
 boxfun(laptop$resolution)
