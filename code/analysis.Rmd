@@ -422,6 +422,13 @@ One more thing that I find worth mentioning is the case of overfitting. This mig
 
 One of the most useful things to do with this model is to test it with prices from a different time. Maybe there we could uncover different patterns of associations for different laptops. For example, low-end pc-s price might drop significantly after release, but their performance could drop even faster so getting a deal on them might not be worth it. Similarly, high-end gaming laptops can hold their prices for a longer period of time and dropping in relative performance but not as much, so it would be worth it to buy it. It would also be interesting to see and try to fit this model on PCs or Smartphones as they share a lot of similiar properties.
 
+# Summary
+
+Finally, let me wrap up the findings here. All in all, the model I built fits the data very well and is suitable to find underpriced laptops. $Exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU which is `r exp(reg3$coefficients['(Intercept)'])` Euros. The most influential coefficients in the model were RAM size, CPU type, SSD and HDD size and finally, screen size category.
+
+To make it more useful, and develop this project further, it would be a great next step, to investigate the question of external validity. It would be great if I could find data on different properties (for example benchmark scores on performance for each model) and try to model price with those or build a competing model with this and compare them. Or it would be another interesting research topic to try and model the price conditioned on the number of days since release. To investigate external validity even further one could try to apply this model on a dataset with PCs and Smartphones. 
+
+
 # Appendix
 
 ## Log Price distribution
