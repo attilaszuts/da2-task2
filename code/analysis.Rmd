@@ -22,26 +22,24 @@ Following my interest of tech gadgets I wanted to investigate a question, that w
 
 ## Data collection
 
-- not representative, price can change based on release date
-- quality? -> no classical measurement error but can be still erroneous inputs (don't know the source, kaggle)
-- this is administrative data 
-- question -> does the price only depend on the specs? no, design, build quality, materials, marketing, etc. -> but otherwise it captures pretty much everything
+Data was collected from kaggle, thus I do not know the original source of it. Since this is similar to administrative data, it is likely that the values are accurate and there is no inherent classical measurement error present. However, there can still be some abnormalities that can distort the model. For example it might be very important from a pricing perspective how long the laptop was released, since prices tend to decrease after the initial hype. Also, it can happen quite easily that someone mistyped something if data was entered manually. The question still remains, that is price dependent only on specs? Likely, that no, there are other factors at play as well, such as design, build quality, materials used, marketing, etc. Also, it misses some important properties, like battery size, number of ports, keyboard type, etc but for our purpose it will be a good enough approximation of price.
 
-- everything will be a variable, except if it needs to be removed
+To get as much information as possible, I will try to use all variables in the model, and I'll only exclude them if I have to.
 
 ## Data cleaning
 
-- cleaning the strings (ram, weight, etc.) 
-- data mining screen -> is it IPS? is it touchscreen? -> creating new variables.function that extracts model, manufacturer, etc.
-- dummy coding and baselines:
-  - op_sys -> win10
-  - type_name -> Notebook
-  - screen_category -> screen_mid
-  - resolution -> 1920x1080
-  - cpu_model -> core i7
-  - memory_type -> ssd
-  - gpu_type -> integrated
-- train-test split (80-20)
+I had to clean almost every variable, to clean numeric variables (RAM, SSD size, HDD size, etc.). Alongside this, I also had to mine information from different variables such as IPS, touchscreen properties of screens, or CPU model, manufacturer, frequency, etc. I created functions that could extract these informations into new ones. 
+
+I recoded the baseline for my variables 
+- Operating system -> windows 10
+- Type -> Notebook
+- Screen size category -> screen_mid
+- Screen resolution -> 1920x1080
+- CPU model -> core i7
+- Memory type -> ssd
+- GPU type -> integrated
+
+Finally, I created and 80-20 train-test split.
 
 ```{r include=FALSE}
 rm(list = ls())
@@ -338,9 +336,13 @@ reg3 <- lm(step_formula, data = laptop, singular.ok = F)
 laptop <- resids(laptop, reg3)
 ```
 
+## Model interpretation
+
+
+
 # Residual analysis
 
-Now that we are sure our model met all our assumptions (that can be checked in the [appendix](#model-assumptions) we can analyse the residuals to find the most valuable deals. I limited the results to be under $2000 because above that it might be that our model is less accurate and there are other factors in pricing premium products as well. Based on this, we get the following results.
+Now that we are sure our model met all our assumptions (that can be checked in the [appendix](#model-assumptions) we can analyse the residuals to find the most valuable deals. I limited the results to be under €2000 because above that it might be that our model is less accurate and there are other factors in pricing premium products as well. Based on this, we get the following results.
 
 ```{r include=FALSE}
 summary(reg3)
@@ -374,7 +376,7 @@ laptop %>%
        #title = "Y - Y hat plot")
 ```
 
-> We can see on this plot, that ???
+We can see on this plot, that the predicted values fit the actual values fairly well.
 
 ```{r include=FALSE}
 laptop %>% 
@@ -483,7 +485,6 @@ Upon inspecting the first model (reg3), I found that there is multicollinearity 
 
 Multicollinearity is an issue, since it limits the $R^2$ of the model and increases the SE of the $\beta$ coefficients. This makes it more difficult to interpret the results and the model parameters will vary a lot based on the sample provided.
 
-> todo: compare R2 of both models, create standardized Betas, try to interpret final results
 
 ```{r include=FALSE}
 mean(vif(reg3)) # there are aliased coefficients in the model -> remove them
