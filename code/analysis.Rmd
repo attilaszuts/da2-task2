@@ -344,7 +344,7 @@ laptop <- resids(laptop, reg3)
 
 ## Model interpretation
 
-This model can be interpreted as giving the price percentage change, when we change a property. $exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU. We can see how the price changes, if we change some property of this model or we can also analyse residuals to find the best deal for a certain category.
+This model can be interpreted as giving the price percentage change, when we change a property. $exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU which is `r exp(reg3$coefficients['(Intercept)'])` Euros. We can see how the price changes, if we change some property of this imaginary laptop or we can also analyse residuals to find the best deal for a certain category.
 
 We can see that among the companies, Lenovo is somewhere in the lower end having quite a few more expensive counterparts (e.g. Apple), but also having more budget options (e.g. Acer). 
 
@@ -420,7 +420,7 @@ laptop_test %>%
 
 One more thing that I find worth mentioning is the case of overfitting. This might be the case, since we have a lot of different variables, however it is very hard to say anything about this. Hopefully thinking about external validity and finding different datasets that could be tested with this model could help shed some light on this question.
 
-One of the most useful things to do with this model is to test it with prices from a different time. Maybe there we could uncover different patterns of associations for different laptops. For example, perhaps high-end gaming laptops can hold their prices for a longer period of time but dropping in relative performance value as the time goes thus you would actually get a worse deal. Similarly, maybe low-end pc-s are dropping a lot after their release thus getting a better deal if you wait a little bit. It would also be interesting to see and try to fit this model on PCs or Smartphones as they share a lot of similiar properties.
+One of the most useful things to do with this model is to test it with prices from a different time. Maybe there we could uncover different patterns of associations for different laptops. For example, low-end pc-s price might drop significantly after release, but their performance could drop even faster so getting a deal on them might not be worth it. Similarly, high-end gaming laptops can hold their prices for a longer period of time and dropping in relative performance but not as much, so it would be worth it to buy it. It would also be interesting to see and try to fit this model on PCs or Smartphones as they share a lot of similiar properties.
 
 # Appendix
 
