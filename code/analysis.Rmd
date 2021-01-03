@@ -249,15 +249,21 @@ rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
 
 ## Descriptives
 
-> summary stats
+We can see that the log transformed version of prices is the closest to distribution.
 
+Detailed plots on the pattern of association between log-price and covariates can be found in the [appendix](#appendix).
 
 ```{r include=FALSE}
-summary(laptop$price_euros)
+summtable <- summary(laptop$price_euros)
 
 skewness(laptop$price_euros)
 skewness(sqrt(laptop$price_euros))
 skewness(log(laptop$price_euros))
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(summtable, format = "html", caption = "Summary statistics for price")
 
 ggplot(aes(price_euros), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
 ggplot(aes(sqrt(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
@@ -475,7 +481,7 @@ laptop %>%
        #title = "Y - Y hat plot")
 ```
 
-We can see on this plot, that 
+> We can see on this plot, that ???
 
 ```{r include=FALSE}
 laptop %>% 
@@ -495,10 +501,6 @@ laptop %>%
              pred_upr = predict(reg3, newdata = laptop, interval = "prediction", alpha = 0.05)[,3],
              ci_lwr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,2],
              ci_upr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,3])
-```
-
-```{r}
-
 ```
 
 # Appendix
