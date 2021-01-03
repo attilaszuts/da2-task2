@@ -2,21 +2,26 @@
 title: "Laptop Pricing"
 author: "Attila Szuts"
 date: "02/01/2021"
-output: html_document
+output: 
+  prettydoc::html_pretty:
+    theme: cayman 
+    highlight: github
+    toc: true
 editor_options: 
   chunk_output_type: console
-abstract: "This analysis will try to answer how you can price a laptop based on its specifications and how you can try to find good deals among them. It uses 1300 data points to build a linear regression model on price."
+abstract: "This analysis will try to answer how you can price a laptop based on its specifications and how you can try to find good deals among them. It uses 1300 data points to build a linear regression model on price using different properties like company that manufactured it, cpu model, RAM size, etc."
 ---
 
 
 
 # Introduction
 
-Following my interest of tech gadgets I wanted to investigate a question, that was bothering me for a while. How can we accurately tell and compare prices of different laptops? It is hard by itself to price them, as usually they are priced at a premium than similar speced custom built PCs not only because of the portability but also because the assembly costs. So in order to do this, I decided to build a linear regression model for pricing laptops based on their specifications (screen size, manufacturer, RAM, etc.)
+Following my interest of tech gadgets I wanted to investigate a question, that was bothering me for a while. How can we accurately tell and compare prices of different laptops? It is hard by itself to price them, as usually they are priced at a premium than similar speced custom built PCs, not only because of the portability but also because the assembly costs. So in order to do this, I decided to build a linear regression model for pricing laptops based on their specifications (screen size, manufacturer, RAM, etc.)
 
 # Data cleaning steps
 
 train-test split
+dummy coding and baselines
 ```{r include=FALSE}
 rm(list = ls())
 library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments); library(car)
@@ -284,7 +289,9 @@ boxfun(laptop$op_sys)
 scatterfun(laptop$weight)
 ```
 
-For the baseline model I am going to use a simple regression of log price on the manufacturer company. I decided to use ln prices, as it was skewed to the left, having a long right tail and this transformation made it normal. I will be careful at the interpretation to use the correct one.
+# Model parameters
+
+For the baseline model I am going to use a simple regression of log price on the manufacturer company. I decided to use ln prices, as it was skewed to the left, having a long right tail and this transformation made it normal. This model gives the average price percentage change for each manufacturer compared to a baseline, which in this case is Lenovo.
 
 reg1: ln_price ~ company
 
@@ -293,7 +300,7 @@ reg1 <- lm_robust(ln_price ~ company, data = laptop)
 summary(reg1)
 ```
 
-To find out which coefficients provide the best fit for my data I ran a simulation to find the best possible fit using AIC.
+To find out which coefficients provide the best fit for my data I ran a simulation to find the best possible fit using AIC with the `stepAIC` function.
 
 ```{r include=FALSE}
 reg2 <- lm(ln_price ~ company + type_name + inches + ram + op_sys + weight + 
@@ -313,7 +320,7 @@ step_formula <- paste(step_formula[2], step_formula[1], step_formula[3])
 step_formula <- gsub("(\\+ op_sys)|(\\+ resolution)|(\\+ gpu_type)", "", step_formula)
 ```
 
-However this model contained [multicollinearity](##multicollinearity), so I had to drop some variables. After this step I came up with the final form:
+However this model contained [multicollinearity](#multicollinearity), so I had to drop some variables. After this step I came up with the final form:
 
 reg3: `r step_formula`
 
@@ -369,13 +376,13 @@ avg_leverage <- k + 1/n
 large_resid[large_resid$leverage > avg_leverage * 2,] # empty
 ```
 
-There are in total `r nrow(large_resid)` outliers. This in itself is not necessarily a bad thing, it might be that they are very good deals. However it is worth taking a look at them to see if they exert undue influence on the model which could in turn distort the results. Investigating the cook's distance of the outliers we can find that there is `r cookd_over_thresh` observation above 1. 
+There are in total `r nrow(large_resid)` outliers. This in itself is not necessarily a bad thing, it might be that they are very good deals. However it is worth taking a look at them to see if they exert undue influence on the model which could in turn distort the results. Investigating the cook's distance of the outliers we can find that there ar `r cookd_over_thresh` observation above 1 which means they are not influential cases. 
 
 ## Multicollinearity
 
-Upon inspecting the first model (reg3), I found that there is multicollinearity among the variables. So I had to investigate which variables cause this, and I found that there was multicollinearity among the operating system, resolution gpu type and cpu model. I experimented to see if there are some combination of these variables that can be included in the model, without multicollinearity but only the cpu model could be used. So due to this, I had to go back and exclude the aforementioned variables. But even with this modification, there still may be some collinearity among my variables, as the average VIF is above 1.
+Upon inspecting the first model (reg3), I found that there is multicollinearity among the variables. So I had to investigate which variables cause this, and I found that there was multicollinearity among the operating system, resolution, gpu type and cpu model confounders. I experimented to see if there are some combination of these variables that can be included in the model, without multicollinearity but only the cpu model could be used. So due to this, I had to go back and exclude the aforementioned variables. But even with this modification, there still may be some multicollinearity among my variables, as the average VIF is above 1.
 
-Multicollinearity is an issue, since it limits the $R^2$ of the model and increases the SE of the $\beta$ coefficients. This makes it more difficult to interpret the results. 
+Multicollinearity is an issue, since it limits the $R^2$ of the model and increases the SE of the $\beta$ coefficients. This makes it more difficult to interpret the results and the model parameters will vary a lot based on the sample provided.
 
 > todo: compare R2 of both models, create standardized Betas, try to interpret final results
 
@@ -429,7 +436,7 @@ The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent i
 
 # Residual analysis
 
-Now that we are sure our model met all our assumptions we can analyse the residuals to find the most valuable deals.
+Now that we are sure our model met all our assumptions we can analyse the residuals to find the most valuable deals. I limited the results to be under $2000 because above that it might be that our model is less accurate and there are other factors in pricing premium products as well. Based on this, we get the following results.
 
 ```{r include=FALSE}
 summary(reg3)
@@ -441,12 +448,13 @@ laptop %>%
   dplyr::select(company, product, price_euros, reg3_pred_exp)
 # underpriced
 underpriced <- laptop %>% 
+  filter(price_euros < 2000) %>% 
   top_n(-5, reg3_res) %>% 
   arrange(reg3_res) %>% 
   dplyr::select(company, product, price_euros, reg3_pred_exp)
 ```
 
-```{r}
+```{r echo=FALSE}
 knitr::kable(underpriced, format = "html", col.names = c("Company", "Product Name", "Price - Actual", "Price - Predicted"), caption = "Underpriced laptops" )
 ```
 
@@ -458,8 +466,8 @@ laptop %>%
   geom_point() + 
   theme_bw() + 
   labs(x = "Predicted log-price",
-       y = "Actual log-price",
-       title = "Y - Y hat plot")
+       y = "Actual log-price")#,
+       #title = "Y - Y hat plot")
 ```
 
 
