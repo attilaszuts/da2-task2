@@ -299,13 +299,14 @@ step$anova
 
 step_formula <- as.character(formula(step))
 step_formula <- paste(step_formula[2], step_formula[1], step_formula[3])
+step_formula <- gsub("(\\+ op_sys)|(\\+ resolution)|(\\+ gpu_type)", "", step_formula)
 ```
 
 Extended model: `r step_formula`
 
 # Model Assumptions
 ```{r include=FALSE}
-reg3 <- lm(step_formula, data = laptop)
+reg3 <- lm(step_formula, data = laptop, singular.ok = F)
 
 laptop <- resids(laptop, reg3)
 ```
@@ -352,11 +353,24 @@ large_resid[large_resid$leverage > avg_leverage * 2,] # empty
 
 ## Multicollinearity
 
+Upon inspecting the first model (reg3), I found that there is multicollinearity among the variables. So I had to investigate which variables cause this, and I found that there was multicollinearity among the operating system, resolution gpu type and cpu model. I experimented to see if there are some combination of these variables that can be included in the model, without multicollinearity but only the cpu model could be used. So due to this, I had to go back and exclude the aforementioned variables.
+
+> todo
+
 ```{r include=FALSE}
 mean(vif(reg3)) # there are aliased coefficients in the model -> remove them
 
 names(reg3$coefficients[is.na(reg3$coefficients)]) # aliased coefficients
 
+
+
+testreg <- lm(ln_price ~ company + type_name + inches + ram + screen_category + memory_type + ssd_size + hdd_size + cpu_model, data = laptop, singular.ok = F)
+
+mean(vif(testreg))
+
+summary(testreg)
+
+rm(testreg)
 ```
 
 ## Residuals - homoskedasticity and normality
