@@ -249,12 +249,13 @@ rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
 
 ## Descriptives
 
-We can see that the log transformed version of prices is the closest to distribution.
+We can see in the [appendix](#appendix) that the log transformed version of prices is the closest to distribution.
 
 Detailed plots on the pattern of association between log-price and covariates can be found in the [appendix](#appendix).
 
 ```{r include=FALSE}
-summtable <- summary(laptop$price_euros)
+summtable <- t(data.frame(x = c(summary(laptop$price_euros))))
+row.names(summtable) <- NULL
 
 skewness(laptop$price_euros)
 skewness(sqrt(laptop$price_euros))
@@ -263,11 +264,7 @@ skewness(log(laptop$price_euros))
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(summtable, format = "html", caption = "Summary statistics for price")
-
-ggplot(aes(price_euros), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
-ggplot(aes(sqrt(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
-ggplot(aes(log(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
+knitr::kable(summtable, format = "html", col.names = colnames(summtable), caption = "Summary statistics for price")
 ```
 
 ```{r include=FALSE}
@@ -504,6 +501,15 @@ laptop %>%
 ```
 
 # Appendix
+
+## Log Price distribution
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(aes(price_euros), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
+ggplot(aes(sqrt(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
+ggplot(aes(log(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
+```
+
 
 ## Pattern of association between ln_price and predictors
 
