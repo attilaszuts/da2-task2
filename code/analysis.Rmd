@@ -48,7 +48,7 @@ Finally, I created an 80-20 train-test split.
 
 ```{r include=FALSE}
 rm(list = ls())
-library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments); library(car); library(texreg)
+library(tidyverse); library(janitor); library(estimatr); library(MASS); library(moments); library(car); library(texreg); library(lm.beta)
 laptops <- "data/raw/laptop-price/"
 raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
@@ -355,12 +355,11 @@ Inches, that is screen size is not a significant predictor, however, the categor
 
 The Intel core i7 is a very expensive cpu, and virtually any other option will cost you less (sometimes even as much as 70%!). This is a very interesting finding, since the CPU is basically the heart of the machine, if you can find a suitable cpu for your needs, then you can potentially save a lot on a pc. But in this paper I am not going to go into more details on this for obvious reasons.
 
-Having both SSD and HDD will be 23% higher on average compared to having only SSD. However, interestingly 1 GB more storage is associated with just a fraction of a percent higher prices on average.
+Having both SSD and HDD will be 23% higher on average compared to having only SSD. However, interestingly 1 GB more storage is associated with just a fraction of a percent higher prices on average. But this can still be an impactful coefficient if we investigate the standardized betas.
+
+If you are interested which properties of a laptop are the most important, you can take a look at the [appendix](#standardized-residuals) where I dive into more detail on the coefficients, and investigate the standardized version of them which can tell us how much they impact the slope of the regression compared to each other. As I suspected earlier, the most important of them are RAM size, CPU type, SSD and HDD size and finally screen size category. 
 
 Our model has a very high $R^2=0.85$ compared to the baseline $R^2=0.16$. I think, this is a relatively accurate and robust result. We will check this with test sample.
-
-
-standardized beta
 
 
 ```{r results = 'asis', echo = FALSE}
@@ -370,7 +369,6 @@ htmlreg(list(reg1, reg3),
         caption = "Modelling laptop prices",
         include.ci = FALSE)
 ```
-
 
 
 
@@ -567,3 +565,17 @@ car::dwt(reg3) # no autocorrelation almost perfect
 ```
 
 The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent in the sample.
+
+# Standardized residuals
+
+```{r results = 'asis', echo = FALSE}
+stand.beta.reg3 <- lm.beta(reg3)
+
+htmlreg(stand.beta.reg3,
+        type = "html",
+        custom.model.names = "Extended - Multiple regression",
+        caption = "Standardised Beta", 
+        override.coef = stand.beta.reg3$standardized.coefficients,
+        include.ci = FALSE)
+```
+
