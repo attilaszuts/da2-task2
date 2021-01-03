@@ -33,7 +33,7 @@ To get as much information as possible, I will try to use all variables in the m
 
 I had to clean almost every variable, to clean numeric variables (RAM, SSD size, HDD size, etc.). Alongside this, I also had to mine information from different variables such as IPS, touchscreen properties of screens, or CPU model, manufacturer, frequency, etc. I created functions that could extract these informations into new ones. 
 
-I recoded the baseline for my variables 
+I recoded the baseline for my variables. I choose these partly based on my personal interest and also on sample size to consider the SE of the coefficients.
 
 - Operating system -> windows 10
 - Company -> Lenovo
@@ -280,8 +280,8 @@ scatterfun <- function(x) {
 boxfun <- function(x) {
   ggplot(aes(x, ln_price), data = laptop) + 
     geom_boxplot() + 
-    theme_bw() + 
-    stat_summary(fun.data = give.n, geom = "text")
+    theme_bw() #+ 
+    # stat_summary(fun.data = give.n, geom = "text")
 }
 # function to display sample size in boxplots
 give.n <- function(x){
@@ -344,7 +344,7 @@ laptop <- resids(laptop, reg3)
 
 ## Model interpretation
 
-This model can be interpreted as giving the price percentage change, when we change a property. $exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU which is `r exp(reg3$coefficients['(Intercept)'])` Euros. We can see how the price changes, if we change some property of this imaginary laptop or we can also analyse residuals to find the best deal for a certain category.
+This model can be interpreted as giving the price percentage change, when we change a property. $exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU which is `r exp(reg3$coefficients['(Intercept)'])` Euros. We can see how the price changes, if we change some property of this imaginary laptop or we can also analyse residuals to find the best deal for a certain category. You can find the detailed comparison in the [appendix](#detailed-model-comparison).
 
 We can see that among the companies, Lenovo is somewhere in the lower end having quite a few more expensive counterparts (e.g. Apple), but also having more budget options (e.g. Acer). 
 
@@ -361,16 +361,6 @@ Having both SSD and HDD will be 23% higher on average compared to having only SS
 If you are interested which properties of a laptop are the most important, you can take a look at the [appendix](#standardized-residuals) where I dive into more detail on the coefficients, and investigate the standardized version of them which can tell us how much they impact the slope of the regression compared to each other. As I suspected earlier, the most important of them are RAM size, CPU type, SSD and HDD size and finally screen size category. 
 
 Our model has a very high $R^2=0.85$ compared to the baseline $R^2=0.16$. I think, this is a relatively accurate and robust result. We will check this with test sample.
-
-
-```{r results = 'asis', echo = FALSE}
-htmlreg(list(reg1, reg3),
-        type = "html",
-        custom.model.names = c("Baseline - simple linear", "Extended - Multiple regression"),
-        caption = "Modelling laptop prices",
-        include.ci = FALSE)
-```
-
 
 
 # Residual analysis
@@ -424,7 +414,7 @@ One of the most useful things to do with this model is to test it with prices fr
 
 # Summary
 
-Finally, let me wrap up the findings here. All in all, the model I built fits the data very well and is suitable to find underpriced laptops. $Exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU which is `r exp(reg3$coefficients['(Intercept)'])` Euros. The most influential coefficients in the model were RAM size, CPU type, SSD and HDD size and finally, screen size category.
+Finally, let me wrap up the findings here. All in all, the model I built fits the data very well and is suitable to find underpriced laptops. $Exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU which is `r round(exp(reg3$coefficients['(Intercept)']), 2)` Euros. The most influential coefficients in the model were RAM size, CPU type, SSD and HDD size and finally, screen size category.
 
 To make it more useful, and develop this project further, it would be a great next step, to investigate the question of external validity. It would be great if I could find data on different properties (for example benchmark scores on performance for each model) and try to model price with those or build a competing model with this and compare them. Or it would be another interesting research topic to try and model the price conditioned on the number of days since release. To investigate external validity even further one could try to apply this model on a dataset with PCs and Smartphones. 
 
@@ -567,6 +557,16 @@ car::dwt(reg3) # no autocorrelation almost perfect
 ```
 
 The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent in the sample.
+
+## Detailed model comparison
+
+```{r results = 'asis', echo = FALSE}
+htmlreg(list(reg1, reg3),
+        type = "html",
+        custom.model.names = c("Baseline - simple linear", "Extended - Multiple regression"),
+        caption = "Comparing laptop price models",
+        include.ci = FALSE)
+```
 
 ## Standardized residuals
 
