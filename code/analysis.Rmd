@@ -5,17 +5,19 @@ date: "02/01/2021"
 output: html_document
 editor_options: 
   chunk_output_type: console
+abstract: "This analysis will try to answer how you can price a laptop based on its specifications and how you can try to find good deals among them. It uses 1300 data points to build a linear regression model on price."
 ---
 
 
-```{r}
+
+```{r include=FALSE}
 rm(list = ls())
 library(tidyverse); library(janitor)
 laptops <- "data/raw/laptop-price/"
 raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
 
-```{r}
+```{r include=FALSE}
 pattern <- "([:digit:]{3,4}x[:digit:]{3,4})" # pattern to match screen resolutions
   
 # data cleaning
@@ -168,21 +170,51 @@ laptop <- laptop %>%
   # clean memory
   mutate(memory = tolower(trimws(memory)), 
          ssd = ifelse(grepl("ssd|flash|hybrid", memory), T, F), # create ssd dummy
-         hdd = ifelse(grepl("hdd|hybrid", memory), T, F)) # create hdd dummy
+         hdd = ifelse(grepl("hdd|hybrid", memory), T, F), # create hdd dummy
+         memory_type = ifelse(ssd == T & hdd == F, "ssd", ifelse(ssd == F & hdd == T, "hdd", ifelse(ssd == T & hdd == T, "both", "none"))))
 
 laptop <- laptop %>% 
   add_column(ssd_size = memory(laptop)["ssd"][[1]], hdd_size = memory(laptop)["hdd"][[1]]) %>%  # add column for ssd and hdd size
   mutate(hdd_size = ifelse(grepl("tb", hdd_size), as.numeric(gsub("tb", "", hdd_size))*1000, as.numeric(gsub("gb", "", hdd_size))), # transform to GB
          ssd_size = ifelse(grepl("gb", ssd_size), as.numeric(gsub("gb", "", ssd_size)), as.numeric(gsub("tb", "", ssd_size))*1000), # transform to GB
          gpu = tolower(trimws(gpu)), 
-         gpu_type = ifelse(grepl("intel hd|intel uhd|intel graphics|intel iris", gpu), "integrated", gpu)) %>%  # does the laptop have a graphics card or is it integrated
-   select(1:5, screen_small, screen_mid, screen_big, touchscreen, ips, resolution, 6, -7, 8, gpu_type, 18:26, 9:11) # reorder and drop cols
+         gpu_type = ifelse(grepl("intel hd|intel uhd|intel graphics|intel iris", gpu), "integrated", gpu)) %>%   # does the laptop have a graphics card or is it integrated
+  select(-c(gpu, memory))
+
 
 # clean directory
 rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
 ```
 
 ```{r}
+scatterfun <- function(x) {
+  ggplot(aes(x, price_euros), data = laptop) +
+    geom_point() + 
+    geom_smooth(method = "loess") +
+    theme_bw()
+}
+```
 
+```{r}
+scatterfun(laptop$company)
+scatterfun(laptop$type_name)
+scatterfun(laptop$inches)
+scatterfun(laptop$screen_small)
+scatterfun(laptop$screen_mid)
+scatterfun(laptop$screen_big)
+laptop %>% pivot_longer(cols = c("screen_small", "screen_mid", "screen_big"), names_to = "screen_category") %>% filter(value == T) %$% scatterfun(screen_category)
+scatterfun(laptop$touchscreen)
+scatterfun(laptop$ips)
+scatterfun(laptop$resolution)
+scatterfun(laptop$ram)
+scatterfun(laptop$gpu_type)
+scatterfun(laptop$cpu_manufac)
+scatterfun(laptop$cpu_model)
+scatterfun(laptop$cpu_freq)
+scatterfun(laptop$memory_type)
+scatterfun(laptop$ssd_size)
+scatterfun(laptop$hdd_size)
+scatterfun(laptop$op_sys)
+scatterfun(laptop$weight)
 ```
 
