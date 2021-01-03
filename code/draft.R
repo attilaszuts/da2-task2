@@ -282,3 +282,18 @@ laptop %>%
 reg1 <- lm(price_euros ~ weight, laptop)
 summary(reg1)
 
+
+
+# analysis ----------------------------------------------------------------
+
+library(MASS)
+fit <- lm(ln_price ~ company + type_name + inches + ram + op_sys + weight + 
+            screen_category + touchscreen + ips + resolution + cpu_manufac + 
+            cpu_model + memory_type + ssd_size + hdd_size + gpu_type, 
+          data = laptop)
+scope_list = list(upper = ~company + type_name + inches + ram + op_sys + weight + 
+                    screen_category + touchscreen + ips + resolution + cpu_manufac + 
+                    cpu_model + memory_type + ssd_size + hdd_size + gpu_type, lower = ~1)
+
+step <- stepAIC(fit, direction="both", scope = scope_list)
+step$anova
