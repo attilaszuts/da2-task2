@@ -297,3 +297,24 @@ scope_list = list(upper = ~company + type_name + inches + ram + op_sys + weight 
 
 step <- stepAIC(fit, direction="both", scope = scope_list)
 step$anova
+
+
+# residuals ---------------------------------------------------------------
+
+laptop_test$pred_price <- predict(reg3, laptop_test)
+
+laptop_test <- resids(laptop_test, reg3)
+
+plot(fitted(reg3), resid(reg3))
+plot(density(resid(reg3)))
+
+plot(resid(reg3), robustHD::standardize(predict(reg3)))
+
+laptop_test$fitted <- predict(reg3, laptop_test)
+
+laptop$fitted <- reg3$fitted.values
+laptop$rstudent <- rstudent(reg3)
+
+laptop %>% 
+  ggplot(aes(fitted, rstudent)) + 
+  geom_point()
