@@ -282,6 +282,22 @@ Extended model: `r step_formula`
 Residuals
 
 ```{r}
+reg3 <- lm(step_formula, data = laptop)
+summary(reg3)
 
+laptop$reg3_pred_vals <- reg3$fitted.values
+
+laptop$reg3_res <- laptop$ln_price - laptop$reg3_pred_vals
+
+laptop$reg3_pred_exp <- exp(laptop$reg3_pred_vals)
+
+laptop %>% 
+  top_n(5, reg3_res) %>% 
+  arrange(desc(reg3_res)) %>% 
+  dplyr::select(company, product, price_euros, reg3_pred_exp)
+laptop %>% 
+  top_n(-5, reg3_res) %>% 
+  arrange(reg3_res) %>% 
+  dplyr::select(company, product, price_euros, reg3_pred_exp)
 ```
 
