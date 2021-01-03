@@ -32,7 +32,7 @@ laptop <- raw1 %>%
   mutate(touchscreen = ifelse(grepl("Touchscreen", raw1$screen_resolution), T, F), # touchscreen dummy
          ips = ifelse(grepl("IPS", raw1$screen_resolution), T, F), # IPS display dummy
          resolution = str_extract_all(raw1$screen_resolution, pattern, simplify = T)) %>% 
-  select(-screen_resolution) %>% 
+  dplyr::select(-screen_resolution) %>% 
   mutate(cpu = tolower(trimws(cpu))) %>% # trim whitespace
   add_column(lencpu = sapply(strsplit(raw1$cpu, " "), length)) %>% 
   mutate(op_sys = tolower(ifelse(grepl("macosx", tolower(gsub(" ", "", op_sys))), "macos" , gsub(" ", "", op_sys))))
@@ -167,7 +167,7 @@ laptop <- laptop %>%
              cpu_cores = cpuCores(laptop) # extract cpu cores
              ) %>% 
   mutate(cpu_freq = as.numeric(gsub("ghz", "", cpu_freq, ignore.case = T))) %>% 
-  select(-c(lencpu, cpu_cores, cpu)) %>% 
+  dplyr::select(-c(lencpu, cpu_cores, cpu)) %>% 
   # clean memory
   mutate(memory = tolower(trimws(memory)), 
          ssd = ifelse(grepl("ssd|flash|hybrid", memory), T, F), # create ssd dummy
@@ -180,7 +180,7 @@ laptop <- laptop %>%
          ssd_size = ifelse(grepl("gb", ssd_size), as.numeric(gsub("gb", "", ssd_size)), as.numeric(gsub("tb", "", ssd_size))*1000), # transform to GB
          gpu = tolower(trimws(gpu)), 
          gpu_type = ifelse(grepl("intel hd|intel uhd|intel graphics|intel iris", gpu), "integrated", gpu)) %>%   # does the laptop have a graphics card or is it integrated
-  select(-c(gpu, memory))
+  dplyr::select(-c(gpu, memory))
 
 # change reference level
 laptop <- laptop %>% 
