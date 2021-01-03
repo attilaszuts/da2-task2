@@ -34,7 +34,8 @@ laptop <- raw1 %>%
          resolution = str_extract_all(raw1$screen_resolution, pattern, simplify = T)) %>% 
   select(-screen_resolution) %>% 
   mutate(cpu = tolower(trimws(cpu))) %>% # trim whitespace
-  add_column(lencpu = sapply(strsplit(raw1$cpu, " "), length))
+  add_column(lencpu = sapply(strsplit(raw1$cpu, " "), length)) %>% 
+  mutate(op_sys = tolower(ifelse(grepl("macosx", tolower(gsub(" ", "", op_sys))), "macos" , gsub(" ", "", op_sys))))
 
   
 # number of words in cpu column
@@ -187,34 +188,53 @@ rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
 ```
 
 ```{r}
+summary(laptop$price_euros)
+
+skewness(laptop$price_euros)
+skewness(sqrt(laptop$price_euros))
+skewness(log(laptop$price_euros))
+
+ggplot(aes(price_euros), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
+ggplot(aes(sqrt(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
+ggplot(aes(log(price_euros)), data = laptop) + geom_histogram(bins = 50, color = "black", fill = "grey") + theme_bw()
+
+laptop <- laptop %>% 
+  mutate(ln_price = log(price_euros))
+```
+
+```{r}
 scatterfun <- function(x) {
-  ggplot(aes(x, price_euros), data = laptop) +
-    geom_point() + 
+  ggplot(aes(x, ln_price), data = laptop) +
+    geom_point(position = "jitter", alpha = 0.4) + 
     geom_smooth(method = "loess") +
+    theme_bw()
+}
+boxfun <- function(x) {
+  ggplot(aes(x, ln_price), data = laptop) + 
+    geom_boxplot() + 
     theme_bw()
 }
 ```
 
 ```{r}
-scatterfun(laptop$company)
-scatterfun(laptop$type_name)
+boxfun(laptop$company)
+boxfun(laptop$type_name)
 scatterfun(laptop$inches)
-scatterfun(laptop$screen_small)
-scatterfun(laptop$screen_mid)
-scatterfun(laptop$screen_big)
-laptop %>% pivot_longer(cols = c("screen_small", "screen_mid", "screen_big"), names_to = "screen_category") %>% filter(value == T) %$% scatterfun(screen_category)
-scatterfun(laptop$touchscreen)
-scatterfun(laptop$ips)
-scatterfun(laptop$resolution)
+laptop %>% pivot_longer(cols = c("screen_small", "screen_mid", "screen_big"), names_to = "screen_category") %>% filter(value == T) %$% boxfun(screen_category)
+boxfun(laptop$touchscreen)
+boxfun(laptop$ips)
+boxfun(laptop$resolution)
 scatterfun(laptop$ram)
 scatterfun(laptop$gpu_type)
-scatterfun(laptop$cpu_manufac)
-scatterfun(laptop$cpu_model)
+boxfun(laptop$cpu_manufac)
+boxfun(laptop$cpu_model)
 scatterfun(laptop$cpu_freq)
-scatterfun(laptop$memory_type)
+boxfun(laptop$memory_type)
 scatterfun(laptop$ssd_size)
 scatterfun(laptop$hdd_size)
-scatterfun(laptop$op_sys)
+boxfun(laptop$op_sys)
 scatterfun(laptop$weight)
 ```
+
+
 
