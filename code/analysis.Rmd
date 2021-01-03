@@ -332,119 +332,15 @@ However this model contained [multicollinearity](#multicollinearity), so I had t
 
 reg3: `r step_formula`
 
-# Model Assumptions
-
-To see if my model meets all the assumptions of multiple linear regression I will investigate outliers and influential cases, multicollinearity, residuals and the independence of errors.
-
 ```{r include=FALSE}
 reg3 <- lm(step_formula, data = laptop, singular.ok = F)
 
 laptop <- resids(laptop, reg3)
 ```
 
-
-## Outliers and influential cases
-
-```{r include=FALSE}
-laptop$reg3_res <- resid(reg3)
-laptop$rstand <- rstandard(reg3)
-laptop$rstudent <- rstudent(reg3)
-laptop$cookd <- cooks.distance(reg3)
-laptop$dfbeta <- dfbeta(reg3)
-laptop$dffit <- dffits(reg3)
-laptop$leverage <- hatvalues(reg3)
-laptop$covratio <- covratio(reg3)
-
-# large residuals
-large_resid <- laptop[laptop$rstand > 2 | laptop$rstand < - 2,]
-large_resid <- large_resid[!is.na(large_resid$rstand),] %>% 
-  dplyr::select(laptop_id, company, product, price_euros, reg3_pred_exp, ln_price, reg3_pred_vals, rstand, cookd, leverage, covratio) %>% 
-  arrange(desc(abs(rstand)))
-
-# are large residuals also influential?
-k <- length(strsplit(x = gsub("~", "+", step_formula), split = " + ", fixed = T)[[1]]) - 1 # number of predictors variables in model
-n <- nrow(laptop) # number of observations
-
-
-# cooks distance
-large_resid[large_resid$cookd > 1,] # empty
-cookd_over_thresh <- length(large_resid[large_resid$cookd > 1,]$laptop_id)
-
-# covariance ratio
-cvr_upr <- 1 + (3*(k + 1) / n)
-cvr_lwr <- 1 - (3*(k + 1) / n)
-large_resid %>% 
-  mutate(cvr_crit = ifelse(cvr_lwr > covratio | cvr_upr < covratio, T, F)) %>% 
-  filter(cvr_crit) %>% 
-  dplyr::select(-cvr_crit) %>% 
-  arrange(desc(abs(covratio))) %>% view()
-
-# leverage
-avg_leverage <- k + 1/n
-large_resid[large_resid$leverage > avg_leverage * 2,] # empty
-```
-
-There are in total `r nrow(large_resid)` outliers. This in itself is not necessarily a bad thing, it might be that they are very good deals. However it is worth taking a look at them to see if they exert undue influence on the model which could in turn distort the results. Investigating the cook's distance of the outliers we can find that there ar `r cookd_over_thresh` observation above 1 which means they are not influential cases. 
-
-## Multicollinearity
-
-Upon inspecting the first model (reg3), I found that there is multicollinearity among the variables. So I had to investigate which variables cause this, and I found that there was multicollinearity among the operating system, resolution, gpu type and cpu model confounders. I experimented to see if there are some combination of these variables that can be included in the model, without multicollinearity but only the cpu model could be used. So due to this, I had to go back and exclude the aforementioned variables. But even with this modification, there still may be some multicollinearity among my variables, as the average VIF is above 1.
-
-Multicollinearity is an issue, since it limits the $R^2$ of the model and increases the SE of the $\beta$ coefficients. This makes it more difficult to interpret the results and the model parameters will vary a lot based on the sample provided.
-
-> todo: compare R2 of both models, create standardized Betas, try to interpret final results
-
-```{r include=FALSE}
-mean(vif(reg3)) # there are aliased coefficients in the model -> remove them
-
-names(reg3$coefficients[is.na(reg3$coefficients)]) # aliased coefficients
-
-testreg <- lm(ln_price ~ company + type_name + inches + ram + screen_category + memory_type + ssd_size + hdd_size + cpu_model, data = laptop, singular.ok = F)
-
-mean(vif(testreg))
-
-summary(testreg)
-
-rm(testreg)
-```
-
-## Residuals - homoskedasticity and normality
-
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-laptop %>% 
-  ggplot(aes(rstudent)) + 
-  geom_histogram(fill = "grey", color = "black") + 
-  theme_bw() + 
-  labs(x = "Studentized residuals",
-       y = "")
-```
-
-We can see on this plot, that the residuals are normally distributed, because they follow a bell-shaped curve.
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-laptop %>% 
-  ggplot(aes(reg3_pred_vals, rstudent)) + 
-  geom_point() + 
-  theme_bw() + 
-  geom_smooth(method = "lm", color = "blue") +
-  labs(x = "Fitted values",
-       y = "Studentized Residuals")
-```
-
-And on this plot we can see, that there is no heteroskedasticity or non-linearity in the data: points are scattered all over at random.
-
-## Independent errors
-
-```{r include=FALSE}
-car::dwt(reg3) # no autocorrelation almost perfect
-```
-
-The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent in the sample.
-
 # Residual analysis
 
-Now that we are sure our model met all our assumptions we can analyse the residuals to find the most valuable deals. I limited the results to be under $2000 because above that it might be that our model is less accurate and there are other factors in pricing premium products as well. Based on this, we get the following results.
+Now that we are sure our model met all our assumptions (that can be checked in the [appendix](#model-assumptions) we can analyse the residuals to find the most valuable deals. I limited the results to be under $2000 because above that it might be that our model is less accurate and there are other factors in pricing premium products as well. Based on this, we get the following results.
 
 ```{r include=FALSE}
 summary(reg3)
@@ -532,3 +428,107 @@ scatterfun(laptop$hdd_size)
 boxfun(laptop$op_sys)
 scatterfun(laptop$weight)
 ```
+
+## Model Assumptions
+
+To see if my model meets all the assumptions of multiple linear regression I will investigate outliers and influential cases, multicollinearity, residuals and the independence of errors.
+
+
+### Outliers and influential cases
+
+```{r include=FALSE}
+laptop$reg3_res <- resid(reg3)
+laptop$rstand <- rstandard(reg3)
+laptop$rstudent <- rstudent(reg3)
+laptop$cookd <- cooks.distance(reg3)
+laptop$dfbeta <- dfbeta(reg3)
+laptop$dffit <- dffits(reg3)
+laptop$leverage <- hatvalues(reg3)
+laptop$covratio <- covratio(reg3)
+
+# large residuals
+large_resid <- laptop[laptop$rstand > 2 | laptop$rstand < - 2,]
+large_resid <- large_resid[!is.na(large_resid$rstand),] %>% 
+  dplyr::select(laptop_id, company, product, price_euros, reg3_pred_exp, ln_price, reg3_pred_vals, rstand, cookd, leverage, covratio) %>% 
+  arrange(desc(abs(rstand)))
+
+# are large residuals also influential?
+k <- length(strsplit(x = gsub("~", "+", step_formula), split = " + ", fixed = T)[[1]]) - 1 # number of predictors variables in model
+n <- nrow(laptop) # number of observations
+
+
+# cooks distance
+large_resid[large_resid$cookd > 1,] # empty
+cookd_over_thresh <- length(large_resid[large_resid$cookd > 1,]$laptop_id)
+
+# covariance ratio
+cvr_upr <- 1 + (3*(k + 1) / n)
+cvr_lwr <- 1 - (3*(k + 1) / n)
+large_resid %>% 
+  mutate(cvr_crit = ifelse(cvr_lwr > covratio | cvr_upr < covratio, T, F)) %>% 
+  filter(cvr_crit) %>% 
+  dplyr::select(-cvr_crit) %>% 
+  arrange(desc(abs(covratio))) %>% view()
+
+# leverage
+avg_leverage <- k + 1/n
+large_resid[large_resid$leverage > avg_leverage * 2,] # empty
+```
+
+There are in total `r nrow(large_resid)` outliers. This in itself is not necessarily a bad thing, it might be that they are very good deals. However it is worth taking a look at them to see if they exert undue influence on the model which could in turn distort the results. Investigating the cook's distance of the outliers we can find that there ar `r cookd_over_thresh` observation above 1 which means they are not influential cases. 
+
+### Multicollinearity
+
+Upon inspecting the first model (reg3), I found that there is multicollinearity among the variables. So I had to investigate which variables cause this, and I found that there was multicollinearity among the operating system, resolution, gpu type and cpu model confounders. I experimented to see if there are some combination of these variables that can be included in the model, without multicollinearity but only the cpu model could be used. So due to this, I had to go back and exclude the aforementioned variables. But even with this modification, there still may be some multicollinearity among my variables, as the average VIF is above 1.
+
+Multicollinearity is an issue, since it limits the $R^2$ of the model and increases the SE of the $\beta$ coefficients. This makes it more difficult to interpret the results and the model parameters will vary a lot based on the sample provided.
+
+> todo: compare R2 of both models, create standardized Betas, try to interpret final results
+
+```{r include=FALSE}
+mean(vif(reg3)) # there are aliased coefficients in the model -> remove them
+
+names(reg3$coefficients[is.na(reg3$coefficients)]) # aliased coefficients
+
+testreg <- lm(ln_price ~ company + type_name + inches + ram + screen_category + memory_type + ssd_size + hdd_size + cpu_model, data = laptop, singular.ok = F)
+
+mean(vif(testreg))
+
+summary(testreg)
+
+rm(testreg)
+```
+
+### Residuals - homoskedasticity and normality
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+laptop %>% 
+  ggplot(aes(rstudent)) + 
+  geom_histogram(fill = "grey", color = "black") + 
+  theme_bw() + 
+  labs(x = "Studentized residuals",
+       y = "")
+```
+
+We can see on this plot, that the residuals are normally distributed, because they follow a bell-shaped curve.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+laptop %>% 
+  ggplot(aes(reg3_pred_vals, rstudent)) + 
+  geom_point() + 
+  theme_bw() + 
+  geom_smooth(method = "lm", color = "blue") +
+  labs(x = "Fitted values",
+       y = "Studentized Residuals")
+```
+
+And on this plot we can see, that there is no heteroskedasticity or non-linearity in the data: points are scattered all over at random.
+
+### Independent errors
+
+```{r include=FALSE}
+car::dwt(reg3) # no autocorrelation almost perfect
+```
+
+The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent in the sample.
