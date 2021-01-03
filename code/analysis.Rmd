@@ -33,6 +33,7 @@ I had to clean almost every variable, to clean numeric variables (RAM, SSD size,
 I recoded the baseline for my variables 
 
 - Operating system -> windows 10
+- Company -> Lenovo
 - Type -> Notebook
 - Screen size category -> screen_mid
 - Screen resolution -> 1920x1080
@@ -40,7 +41,7 @@ I recoded the baseline for my variables
 - Memory type -> ssd
 - GPU type -> integrated
 
-Finally, I created and 80-20 train-test split.
+Finally, I created an 80-20 train-test split.
 
 ```{r include=FALSE}
 rm(list = ls())
