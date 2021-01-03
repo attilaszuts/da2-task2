@@ -12,7 +12,7 @@ abstract: "This analysis will try to answer how you can price a laptop based on 
 
 ```{r include=FALSE}
 rm(list = ls())
-library(tidyverse); library(janitor)
+library(tidyverse); library(janitor); library(estimatr)
 laptops <- "data/raw/laptop-price/"
 raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
@@ -182,6 +182,11 @@ laptop <- laptop %>%
          gpu_type = ifelse(grepl("intel hd|intel uhd|intel graphics|intel iris", gpu), "integrated", gpu)) %>%   # does the laptop have a graphics card or is it integrated
   select(-c(gpu, memory))
 
+# change reference level
+laptop <- laptop %>% 
+  mutate(company = relevel(as.factor(company), ref = "Apple")) %>% 
+  pivot_longer(cols = c("screen_small", "screen_mid", "screen_big"), names_to = "screen_category") %>% 
+  filter(value == T)
 
 # clean directory
 rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
@@ -236,5 +241,16 @@ boxfun(laptop$op_sys)
 scatterfun(laptop$weight)
 ```
 
+Baseline model: $\text{reg1} : \text{ln_price} = \alpha + \beta * \text{company} $.
 
+```{r}
+reg1 <- lm_robust(ln_price ~ company, data = laptop)
+summary(reg1)
+```
+
+Extended model:
+
+```{r}
+
+```
 
