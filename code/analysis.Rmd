@@ -12,7 +12,7 @@ abstract: "This analysis will try to answer how you can price a laptop based on 
 
 ```{r include=FALSE}
 rm(list = ls())
-library(tidyverse); library(janitor); library(estimatr)
+library(tidyverse); library(janitor); library(estimatr); library(MASS)
 laptops <- "data/raw/laptop-price/"
 raw1 <- read_csv(paste0(laptops, "laptop_price.csv")) %>% clean_names()
 ```
@@ -248,9 +248,18 @@ reg1 <- lm_robust(ln_price ~ company, data = laptop)
 summary(reg1)
 ```
 
-Extended model:
-
 ```{r}
+reg2 <- lm(ln_price ~ company + type_name + inches + ram + op_sys + weight + 
+            screen_category + touchscreen + ips + resolution + cpu_manufac + 
+            cpu_model + memory_type + ssd_size + hdd_size + gpu_type, 
+          data = laptop)
 
+scope_list = list(upper = ~company + type_name + inches + ram + op_sys + weight + 
+                    screen_category + touchscreen + ips + resolution + cpu_manufac + 
+                    cpu_model + memory_type + ssd_size + hdd_size + gpu_type, lower = ~1)
+
+step <- stepAIC(reg2, direction="both", scope = scope_list)
+step$anova
 ```
 
+Extended model: `r formula(step)`
