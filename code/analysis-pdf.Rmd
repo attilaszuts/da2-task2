@@ -3,9 +3,7 @@ title: "Laptop Pricing"
 author: "Attila Szuts"
 date: "02/01/2021"
 output:
-  prettydoc::html_pretty:
-    theme: cayman
-    highlight: github
+  pdf_document:
     toc: yes
 editor_options:
   chunk_output_type: console
@@ -271,7 +269,7 @@ skewness(log(laptop$price_euros))
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(summtable, format = "html", col.names = colnames(summtable), caption = "Summary statistics for price")
+knitr::kable(summtable, format = "latex", col.names = colnames(summtable), caption = "Summary statistics for price")
 ```
 
 ```{r include=FALSE}
@@ -388,7 +386,7 @@ underpriced <- laptop %>%
 ```
 
 ```{r echo=FALSE}
-knitr::kable(underpriced, format = "html", col.names = c("Company", "Product Name", "Price - Actual", "Price - Predicted"), caption = "Underpriced laptops" )
+knitr::kable(underpriced, format = "latex", col.names = c("Company", "Product Name", "Price - Actual", "Price - Predicted"), caption = "Underpriced laptops" )
 ```
 
 # Robustness checks
@@ -565,8 +563,8 @@ The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent i
 ## Detailed model comparison
 
 ```{r results = 'asis', echo = FALSE}
-htmlreg(list(reg1, reg3),
-        type = "html",
+texreg(list(reg1, reg3),
+        type = "latex",
         custom.model.names = c("Baseline - simple linear", "Extended - Multiple regression"),
         caption = "Comparing laptop price models",
         include.ci = FALSE)
@@ -577,8 +575,8 @@ htmlreg(list(reg1, reg3),
 ```{r results = 'asis', echo = FALSE}
 stand.beta.reg3 <- lm.beta(reg3)
 
-htmlreg(stand.beta.reg3,
-        type = "html",
+texreg(stand.beta.reg3,
+        type = "latex",
         custom.model.names = "Extended - Multiple regression",
         caption = "Standardised Beta", 
         override.coef = stand.beta.reg3$standardized.coefficients,
@@ -613,8 +611,8 @@ laptop %>%
 ## Compare Train and Test model
 
 ```{r echo=FALSE, results = 'asis'}
-htmlreg(list(reg3, reg5),
-        type = "html",
+texreg(list(reg3, reg5),
+        type = "latex",
         custom.model.names = c("Training model", "Testing model"),
         caption = "Modelling laptop prices",
         include.ci = FALSE)
