@@ -192,7 +192,7 @@ laptop <- laptop %>%
 rm(temp, pattern, cpuMan, cpuModel, cpuVariant, cpuFreq, cpuCores, raw1)
 ```
 
-```{r}
+```{r include=FALSE}
 summary(laptop$price_euros)
 
 skewness(laptop$price_euros)
@@ -207,7 +207,7 @@ laptop <- laptop %>%
   mutate(ln_price = log(price_euros))
 ```
 
-```{r}
+```{r include=FALSE}
 scatterfun <- function(x) {
   ggplot(aes(x, ln_price), data = laptop) +
     geom_point(position = "jitter", alpha = 0.4) + 
@@ -221,7 +221,7 @@ boxfun <- function(x) {
 }
 ```
 
-```{r}
+```{r include=FALSE}
 boxfun(laptop$company)
 boxfun(laptop$type_name)
 scatterfun(laptop$inches)
@@ -241,14 +241,14 @@ boxfun(laptop$op_sys)
 scatterfun(laptop$weight)
 ```
 
-Baseline model: $\text{reg1} : \text{ln_price} = \alpha + \beta * \text{company} $.
+Baseline model: $\text{reg1} : \text{ln_price} = \alpha + \beta * \text{company}$.
 
-```{r}
+```{r include=FALSE}
 reg1 <- lm_robust(ln_price ~ company, data = laptop)
 summary(reg1)
 ```
 
-```{r}
+```{r include=FALSE}
 reg2 <- lm(ln_price ~ company + type_name + inches + ram + op_sys + weight + 
             screen_category + touchscreen + ips + resolution + cpu_manufac + 
             cpu_model + memory_type + ssd_size + hdd_size + gpu_type, 
@@ -260,6 +260,9 @@ scope_list = list(upper = ~company + type_name + inches + ram + op_sys + weight 
 
 step <- stepAIC(reg2, direction="both", scope = scope_list)
 step$anova
+
+step_formula <- as.character(formula(step))
+step_formula <- paste(step_formula[2], step_formula[1], step_formula[3])
 ```
 
-Extended model: `r formula(step)`
+Extended model: `r step_formula`
