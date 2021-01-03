@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.18)  3 JAN 2021 22:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.11.18)  3 JAN 2021 23:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -535,37 +535,37 @@ LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 2
 (c:/Users/ati/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 ) [3]
-<analysis-pdf_files/figure-latex/unnamed-chunk-13-1.pdf, id=138, 469.755pt x 32
-5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (type
- pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-13-1.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-13-1.pdf
-  used on input line 338.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[4] [5 <./analysis-pdf_files/figure-latex/unnamed-chunk-13-1.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf, id=160, 469.755pt x 32
+<analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf, id=138, 469.755pt x 32
 5.215pt>
 File: analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type
  pdf)
 <use analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf>
 Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf
+  used on input line 338.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[4] [5 <./analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf, id=160, 469.755pt x 32
+5.215pt>
+File: analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type
+ pdf)
+<use analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf
   used on input line 384.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<analysis-pdf_files/figure-latex/unnamed-chunk-14-2.pdf, id=161, 469.755pt x 32
+<analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf, id=161, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-14-2.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-14-2.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-14-2.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf
   used on input line 385.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-<analysis-pdf_files/figure-latex/unnamed-chunk-14-3.pdf, id=162, 469.755pt x 32
+<analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf, id=162, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-14-3.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-14-3.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-14-3.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf
   used on input line 386.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
@@ -581,200 +581,200 @@ Underfull \hbox (badness 10000) in paragraph at lines 384--387
 [6]
 Overfull \vbox (54.6926pt too high) has occurred while \output is active []
 
-[7 <./analysis-pdf_files/figure-latex/unnamed-chunk-14-1.pdf> <./analysis-pdf_f
-iles/figure-latex/unnamed-chunk-14-2.pdf>]
+[7 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf> <./analysis-pdf_f
+iles/figure-latex/unnamed-chunk-15-2.pdf>]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 394.
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf, id=183, 469.755pt x 32
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-1.pdf, id=183, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-1.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-1.pdf
   used on input line 398.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[8 <./analysis-pdf_files/figure-latex/unnamed-chunk-14-3.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf, id=195, 469.755pt x 32
+[8 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-2.pdf, id=195, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-2.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-2.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-2.pdf
   used on input line 406.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[9 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-1.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf, id=205, 469.755pt x 32
+[9 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-1.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-3.pdf, id=205, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-3.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-3.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-3.pdf
   used on input line 414.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[10 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-2.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-4.pdf, id=215, 469.755pt x 32
+[10 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-2.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-4.pdf, id=215, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-4.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-4.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-4.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-4.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-4.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-4.pdf
   used on input line 422.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[11 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-3.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-5.pdf, id=229, 469.755pt x 32
+[11 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-3.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-5.pdf, id=229, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-5.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-5.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-5.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-5.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-5.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-5.pdf
   used on input line 430.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[12 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-4.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-6.pdf, id=239, 469.755pt x 32
+[12 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-4.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-6.pdf, id=239, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-6.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-6.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-6.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-6.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-6.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-6.pdf
   used on input line 438.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[13 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-5.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-7.pdf, id=250, 469.755pt x 32
+[13 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-5.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-7.pdf, id=250, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-7.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-7.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-7.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-7.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-7.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-7.pdf
   used on input line 446.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[14 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-6.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-8.pdf, id=260, 469.755pt x 32
+[14 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-6.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-8.pdf, id=260, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-8.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-8.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-8.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-8.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-8.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-8.pdf
   used on input line 454.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[15 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-7.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-9.pdf, id=270, 469.755pt x 32
+[15 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-7.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-9.pdf, id=270, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-9.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-9.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-9.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-9.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-9.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-9.pdf
   used on input line 462.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[16 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-8.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-10.pdf, id=284, 469.755pt x 3
+[16 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-8.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-10.pdf, id=284, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-10.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-10.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-10.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-10.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-10.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-10.pd
 f  used on input line 470.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[17 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-9.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-11.pdf, id=299, 469.755pt x 3
+[17 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-9.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-11.pdf, id=299, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-11.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-11.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-11.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-11.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-11.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-11.pd
 f  used on input line 478.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[18 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-10.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-12.pdf, id=309, 469.755pt x 3
+[18 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-10.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-12.pdf, id=309, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-12.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-12.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-12.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-12.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-12.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-12.pd
 f  used on input line 486.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[19 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-11.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-13.pdf, id=320, 469.755pt x 3
+[19 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-11.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-13.pdf, id=320, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-13.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-13.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-13.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-13.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-13.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-13.pd
 f  used on input line 494.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[20 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-12.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-14.pdf, id=334, 469.755pt x 3
+[20 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-12.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-14.pdf, id=334, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-14.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-14.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-14.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-14.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-14.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-14.pd
 f  used on input line 502.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[21 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-13.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-15.pdf, id=344, 469.755pt x 3
+[21 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-13.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-15.pdf, id=344, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-15.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-15.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-15.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-15.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-15.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-15.pd
 f  used on input line 510.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[22 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-14.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-16.pdf, id=358, 469.755pt x 3
+[22 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-14.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-16.pdf, id=358, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-16.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-16.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-16.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-16.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-16.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-16.pd
 f  used on input line 518.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[23 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-15.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-15-17.pdf, id=372, 469.755pt x 3
+[23 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-15.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-16-17.pdf, id=372, 469.755pt x 3
 25.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-15-17.pdf Graphic file (typ
+File: analysis-pdf_files/figure-latex/unnamed-chunk-16-17.pdf Graphic file (typ
 e pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-15-17.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-15-17.pd
+<use analysis-pdf_files/figure-latex/unnamed-chunk-16-17.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-16-17.pd
 f  used on input line 526.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[24 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-16.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-18-1.pdf, id=382, 469.755pt x 32
-5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-18-1.pdf Graphic file (type
- pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-18-1.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-18-1.pdf
-  used on input line 569.
-(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[25 <./analysis-pdf_files/figure-latex/unnamed-chunk-15-17.pdf>]
-<analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf, id=401, 469.755pt x 32
+[24 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-16.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf, id=382, 469.755pt x 32
 5.215pt>
 File: analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (type
  pdf)
 <use analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf>
 Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf
+  used on input line 569.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[25 <./analysis-pdf_files/figure-latex/unnamed-chunk-16-17.pdf>]
+<analysis-pdf_files/figure-latex/unnamed-chunk-20-1.pdf, id=401, 469.755pt x 32
+5.215pt>
+File: analysis-pdf_files/figure-latex/unnamed-chunk-20-1.pdf Graphic file (type
+ pdf)
+<use analysis-pdf_files/figure-latex/unnamed-chunk-20-1.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-20-1.pdf
   used on input line 574.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[26 <./analysis-pdf_files/figure-latex/unnamed-chunk-18-1.pdf>]
+[26 <./analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf>]
 
 LaTeX Warning: Float too large for page by 701.00314pt on input line 709.
 
 
 LaTeX Warning: Float too large for page by 795.05872pt on input line 843.
 
-<analysis-pdf_files/figure-latex/unnamed-chunk-23-1.pdf, id=412, 469.755pt x 32
+<analysis-pdf_files/figure-latex/unnamed-chunk-24-1.pdf, id=412, 469.755pt x 32
 5.215pt>
-File: analysis-pdf_files/figure-latex/unnamed-chunk-23-1.pdf Graphic file (type
+File: analysis-pdf_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (type
  pdf)
-<use analysis-pdf_files/figure-latex/unnamed-chunk-23-1.pdf>
-Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-23-1.pdf
+<use analysis-pdf_files/figure-latex/unnamed-chunk-24-1.pdf>
+Package pdftex.def Info: analysis-pdf_files/figure-latex/unnamed-chunk-24-1.pdf
   used on input line 848.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[27 <./analysis-pdf_files/figure-latex/unnamed-chunk-19-1.pdf>] [28] [29]
+[27 <./analysis-pdf_files/figure-latex/unnamed-chunk-20-1.pdf>] [28] [29]
 
 LaTeX Warning: Float too large for page by 689.00314pt on input line 977.
 
-[30 <./analysis-pdf_files/figure-latex/unnamed-chunk-23-1.pdf>] [31] (./analysi
+[30 <./analysis-pdf_files/figure-latex/unnamed-chunk-24-1.pdf>] [31] (./analysi
 s-pdf.aux)
 Package rerunfilecheck Info: File `analysis-pdf.out' has not changed.
 (rerunfilecheck)             Checksum: 7E68B91EA9D5E6FD6170BAD3039C8955;2652.
@@ -811,7 +811,7 @@ fonts/type1/public/lm/lmsy5.pfb><c:/Users/ati/AppData/Roaming/TinyTeX/texmf-dis
 t/fonts/type1/public/lm/lmsy7.pfb><c:/Users/ati/AppData/Roaming/TinyTeX/texmf-d
 ist/fonts/type1/public/lm/lmtk10.pfb><c:/Users/ati/AppData/Roaming/TinyTeX/texm
 f-dist/fonts/type1/public/lm/lmtt10.pfb>
-Output written on analysis-pdf.pdf (31 pages, 961507 bytes).
+Output written on analysis-pdf.pdf (31 pages, 961505 bytes).
 PDF statistics:
  536 PDF objects out of 1000 (max. 8388607)
  435 compressed objects within 5 object streams
