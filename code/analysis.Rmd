@@ -353,8 +353,9 @@ large_resid[large_resid$leverage > avg_leverage * 2,] # empty
 ## Multicollinearity
 
 ```{r include=FALSE}
-mean(vif(reg3))
-alias(reg3)
+mean(vif(reg3)) # there are aliased coefficients in the model -> remove them
+
+names(reg3$coefficients[is.na(reg3$coefficients)]) # aliased coefficients
 
 ```
 
