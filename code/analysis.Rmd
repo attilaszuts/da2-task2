@@ -328,6 +328,7 @@ step$anova
 
 step_formula <- as.character(formula(step))
 step_formula <- paste(step_formula[2], step_formula[1], step_formula[3])
+step_formula_mc <- step_formula
 step_formula <- gsub("(\\+ op_sys)|(\\+ resolution)|(\\+ gpu_type)", "", step_formula)
 ```
 
@@ -396,39 +397,30 @@ underpriced <- laptop %>%
 knitr::kable(underpriced, format = "html", col.names = c("Company", "Product Name", "Price - Actual", "Price - Predicted"), caption = "Underpriced laptops" )
 ```
 
-# Y - Y hat plot
+# Robustness checks
+
+Let us see now the test sample results, how well does the model predict laptop prices. 
+
+```{r include=FALSE}
+reg5 <- lm(step_formula, data = laptop_test)
+laptop_test$fitted <- predict(reg5, newdata = laptop_test)
+laptop_test <- resids(laptop_test, reg5)
+```
+
+You can see in the appendix the detailed comparison, but for the most part, all coefficients are the same (except for cases where the group size is small). The $R^2=0.86$ is also very similar to the one we got with the training sample. So we can say it with confidence that there is some reality to our model, if this sample is representative. The $\text{Y} - \hat{\text{Y}}$ plot is showing a good fit as well.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-laptop %>% 
+laptop_test %>% 
   ggplot(aes(reg3_pred_vals, ln_price)) + 
   geom_point() + 
   theme_bw() + 
   labs(x = "Predicted log-price",
-       y = "Actual log-price")#,
-       #title = "Y - Y hat plot")
+       y = "Actual log-price")
 ```
 
-We can see on this plot, that the predicted values fit the actual values fairly well.
+One more thing that I find worth mentioning is the case of overfitting. This might be the case, since we have a lot of different variables, however it is very hard to say anything about this. Hopefully thinking about external validity and finding different datasets that could be tested with this model could help shed some light on this question.
 
-```{r include=FALSE}
-laptop %>% 
-  ggplot(aes(reg3_pred_exp, price_euros)) + 
-  geom_point() + 
-  theme_bw() + 
-  labs(x = "Predicted price",
-       y = "Actual price",
-       title = "Y - Y hat plot")
-```
-
-Prediction intervals
-
-```{r include=FALSE}
-laptop %>% 
-  add_column(pred_lwr = predict(reg3, newdata = laptop, interval = "prediction", alpha = 0.05)[,2],
-             pred_upr = predict(reg3, newdata = laptop, interval = "prediction", alpha = 0.05)[,3],
-             ci_lwr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,2],
-             ci_upr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,3])
-```
+One of the most useful things to do with this model is to test it with prices from a different time. Maybe there we could uncover different patterns of associations for different laptops. For example, perhaps high-end gaming laptops can hold their prices for a longer period of time but dropping in relative performance value as the time goes thus you would actually get a worse deal. Similarly, maybe low-end pc-s are dropping a lot after their release thus getting a better deal if you wait a little bit. It would also be interesting to see and try to fit this model on PCs or Smartphones as they share a lot of similiar properties.
 
 # Appendix
 
@@ -519,9 +511,12 @@ Multicollinearity is an issue, since it limits the $R^2$ of the model and increa
 
 
 ```{r include=FALSE}
-mean(vif(reg3)) # there are aliased coefficients in the model -> remove them
+# old formula, before excluding multicollinear variables
+reg4 <- lm(step_formula_mc, data = laptop)
 
-names(reg3$coefficients[is.na(reg3$coefficients)]) # aliased coefficients
+# mean(vif(reg4)) there are aliased coefficients in the model -> remove them
+
+names(reg4$coefficients[is.na(reg4$coefficients)]) # aliased coefficients
 
 testreg <- lm(ln_price ~ company + type_name + inches + ram + screen_category + memory_type + ssd_size + hdd_size + cpu_model, data = laptop, singular.ok = F)
 
@@ -529,7 +524,7 @@ mean(vif(testreg))
 
 summary(testreg)
 
-rm(testreg)
+rm(testreg, reg4)
 ```
 
 ### Residuals - homoskedasticity and normality
@@ -566,7 +561,7 @@ car::dwt(reg3) # no autocorrelation almost perfect
 
 The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent in the sample.
 
-# Standardized residuals
+## Standardized residuals
 
 ```{r results = 'asis', echo = FALSE}
 stand.beta.reg3 <- lm.beta(reg3)
@@ -576,6 +571,51 @@ htmlreg(stand.beta.reg3,
         custom.model.names = "Extended - Multiple regression",
         caption = "Standardised Beta", 
         override.coef = stand.beta.reg3$standardized.coefficients,
+        include.ci = FALSE)
+```
+
+
+## Y - Y hat plot
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+laptop %>% 
+  ggplot(aes(reg3_pred_vals, ln_price)) + 
+  geom_point() + 
+  theme_bw() + 
+  labs(x = "Predicted log-price",
+       y = "Actual log-price")#,
+       #title = "Y - Y hat plot")
+```
+
+We can see on this plot, that the predicted values fit the actual values fairly well.
+
+```{r include=FALSE}
+laptop %>% 
+  ggplot(aes(reg3_pred_exp, price_euros)) + 
+  geom_point() + 
+  theme_bw() + 
+  labs(x = "Predicted price",
+       y = "Actual price",
+       title = "Y - Y hat plot")
+```
+
+## Prediction intervals
+
+```{r include=FALSE}
+laptop %>% 
+  add_column(pred_lwr = predict(reg3, newdata = laptop, interval = "prediction", alpha = 0.05)[,2],
+             pred_upr = predict(reg3, newdata = laptop, interval = "prediction", alpha = 0.05)[,3],
+             ci_lwr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,2],
+             ci_upr = predict(reg3, newdata = laptop, interval = "confidence", alpha = 0.05)[,3])
+```
+
+## Compare Train and Test model
+
+```{r echo=FALSE, results = 'asis'}
+htmlreg(list(reg3, reg5),
+        type = "html",
+        custom.model.names = c("Training model", "Testing model"),
+        caption = "Modelling laptop prices",
         include.ci = FALSE)
 ```
 
