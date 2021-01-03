@@ -2,14 +2,17 @@
 title: "Laptop Pricing"
 author: "Attila Szuts"
 date: "02/01/2021"
-output: 
+output:
   prettydoc::html_pretty:
-    theme: cayman 
+    theme: cayman
     highlight: github
-    toc: true
-editor_options: 
+    toc: yes
+editor_options:
   chunk_output_type: console
-abstract: "This analysis will try to answer how you can price a laptop based on its specifications and how you can try to find good deals among them. It uses 1300 data points to build a linear regression model on price using different properties like company that manufactured it, cpu model, RAM size, etc."
+abstract: This analysis will try to answer how you can price a laptop based on its
+  specifications and how you can try to find good deals among them. It uses 1300 data
+  points to build a linear regression model on price using different properties like
+  company that manufactured it, cpu model, RAM size, etc.
 ---
 
 
@@ -342,16 +345,33 @@ laptop <- resids(laptop, reg3)
 
 This model can be interpreted as giving the price percentage change, when we change a property. $exp(\alpha)$ gives us the average price for a Lenovo Notebook with Windows 10, Intel core i7 CPU, medium sized FullHD display, SSD and integrated GPU. We can see how the price changes, if we change some property of this model or we can also analyse residuals to find the best deal for a certain category.
 
-```{r  results='asis', echo=FALSE}
-texreg(list(reg1 , reg3),
-        type = 'html',
-        custom.model.names = c("Simple linear","Multiple linear regression"),
+We can see that among the companies, Lenovo is somewhere in the lower end having quite a few more expensive counterparts (e.g. Apple), but also having more budget options (e.g. Acer). 
+
+Ultrabooks, Gaming, Convertible and workstation products are all significantly more expensive compared to Notebooks. Netbooks are cheaper, but marginally and insignificantly.
+
+Inches, that is screen size is not a significant predictor, however, the categories were significant. Both smaller and larger screens are around 20% more expensive compared to medium sized screens. This is probably because of other factors (like premium devices being smaller so they are more portable or gaming pcs having large screens).
+
+1GB more RAM will cost you 2% more on average.
+
+The Intel core i7 is a very expensive cpu, and virtually any other option will cost you less (sometimes even as much as 70%!). This is a very interesting finding, since the CPU is basically the heart of the machine, if you can find a suitable cpu for your needs, then you can potentially save a lot on a pc. But in this paper I am not going to go into more details on this for obvious reasons.
+
+Having both SSD and HDD will be 23% higher on average compared to having only SSD. However, interestingly 1 GB more storage is associated with just a fraction of a percent higher prices on average.
+
+Our model has a very high $R^2=0.85$ compared to the baseline $R^2=0.16$. I think, this is a relatively accurate and robust result. We will check this with test sample.
+
+
+standardized beta
+
+
+```{r results = 'asis', echo = FALSE}
+htmlreg(list(reg1, reg3),
+        type = "html",
+        custom.model.names = c("Baseline - simple linear", "Extended - Multiple regression"),
         caption = "Modelling laptop prices",
-       custom.coef.names = c(),
-        include.ci = FALSE,
-       float.pos = 'h',
-       fontsize = 'small')
+        include.ci = FALSE)
 ```
+
+
 
 
 # Residual analysis
