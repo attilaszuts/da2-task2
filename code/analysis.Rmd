@@ -377,14 +377,12 @@ Upon inspecting the first model (reg3), I found that there is multicollinearity 
 
 Multicollinearity is an issue, since it limits the $R^2$ of the model and increases the SE of the $\beta$ coefficients. This makes it more difficult to interpret the results. 
 
-> todo
+> todo: compare R2 of both models, create standardized Betas, try to interpret final results
 
 ```{r include=FALSE}
 mean(vif(reg3)) # there are aliased coefficients in the model -> remove them
 
 names(reg3$coefficients[is.na(reg3$coefficients)]) # aliased coefficients
-
-
 
 testreg <- lm(ln_price ~ company + type_name + inches + ram + screen_category + memory_type + ssd_size + hdd_size + cpu_model, data = laptop, singular.ok = F)
 
@@ -397,14 +395,19 @@ rm(testreg)
 
 ## Residuals - homoskedasticity and normality
 
-```{r include=FALSE}
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 laptop %>% 
   ggplot(aes(rstudent)) + 
   geom_histogram(fill = "grey", color = "black") + 
   theme_bw() + 
-  labs(x = "Studentized residual",
+  labs(x = "Studentized residuals",
        y = "")
+```
 
+We can see on this plot, that the residuals are normally distributed, because they follow a bell-shaped curve.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 laptop %>% 
   ggplot(aes(reg3_pred_vals, rstudent)) + 
   geom_point() + 
@@ -414,13 +417,19 @@ laptop %>%
        y = "Studentized Residuals")
 ```
 
+And on this plot we can see, that there is no heteroskedasticity or non-linearity in the data: points are scattered all over at random.
+
 ## Independent errors
 
 ```{r include=FALSE}
 car::dwt(reg3) # no autocorrelation almost perfect
 ```
 
-Residuals
+The Durbin-Watson test is `r car::dwt(reg3)[2]`, so the errors are independent in the sample.
+
+# Residual analysis
+
+Now that we are sure our model met all our assumptions we can analyse the residuals to find the most valuable deals.
 
 ```{r include=FALSE}
 summary(reg3)
@@ -431,15 +440,19 @@ laptop %>%
   arrange(desc(reg3_res)) %>% 
   dplyr::select(company, product, price_euros, reg3_pred_exp)
 # underpriced
-laptop %>% 
+underpriced <- laptop %>% 
   top_n(-5, reg3_res) %>% 
   arrange(reg3_res) %>% 
   dplyr::select(company, product, price_euros, reg3_pred_exp)
 ```
 
-$\text{Y}-\hat{\text{Y}}$ plot
+```{r}
+knitr::kable(underpriced, format = "html", col.names = c("Company", "Product Name", "Price - Actual", "Price - Predicted"), caption = "Underpriced laptops" )
+```
 
-```{r include=FALSE}
+# Y - Y hat plot
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 laptop %>% 
   ggplot(aes(reg3_pred_vals, ln_price)) + 
   geom_point() + 
@@ -447,6 +460,10 @@ laptop %>%
   labs(x = "Predicted log-price",
        y = "Actual log-price",
        title = "Y - Y hat plot")
+```
+
+
+```{r include=FALSE}
 laptop %>% 
   ggplot(aes(reg3_pred_exp, price_euros)) + 
   geom_point() + 
