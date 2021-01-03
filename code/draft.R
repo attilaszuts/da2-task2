@@ -324,3 +324,14 @@ laptop %>%
 
 names(reg3$coefficients[is.na(reg3$coefficients)])
 
+laptop %>% 
+  filter(op_sys == "macos" | resolution == "2160x1440" | resolution == "2256x1504" | cpu_model == "atom z8350" | cpu_model == "cortex" | gpu_type == "amd radeon pro 560" | gpu_type == "amd radeon r2 graphics" | gpu_type == "amd radeon r3" | gpu_type == "amd radeon rx 560" | gpu_type == "arm mali t860 mp4") %>% 
+  lm(step_formula, data = ., singular.ok = F)
+
+# op_sys + resolution + gpu_type -> variables that had to be excluded
+
+testreg <- lm(ln_price ~ company + type_name + inches + ram + screen_category + memory_type + ssd_size + hdd_size + cpu_model, data = laptop, singular.ok = F)
+
+mean(vif(testreg))
+
+summary(testreg)
